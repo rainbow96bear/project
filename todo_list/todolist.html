@@ -1,0 +1,72 @@
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>To Do List</title>
+    <link rel="stylesheet" href="todolist.css" />
+  </head>
+  <body>
+    <div id="character"></div>
+
+    <!-- 메인 화면 -->
+    <div id="mainScreen">
+      <div id="mainbtnAF">
+        <div id="mainbtnA">
+          <button id="menuBtn"></button>
+          <span>To do List</span>
+          <button id="addTaskbtn" onclick="addTask()">할 일 추가</button>
+        </div>
+      </div>
+      <div id="taskListAreaFrame">
+        <div id="taskListArea"></div>
+      </div>
+    </div>
+    <div id="menuBar"></div>
+    <div id="preventScreen" class="hide"></div>
+    <!-- 할 일 추가 화면 -->
+    <div id="addTaskScreen" class="hide">
+      <div id="addTaskTotalFrame">
+        <div id="inputTitleFrame">
+          <div id="taskTitle" class="hide"></div>
+          <input type="text" id="inputTitle" />
+        </div>
+        <div id="inputContentFrame">
+          <div id="inputContentArea">
+            <div id="detailTaskA"></div>
+            <div id="addDetailTaskA" class="btnCenter">
+              <input type="text" id="detailTask" />
+              <button id="contentAddBtn" onclick="addDetailTask()">+</button>
+            </div>
+          </div>
+        </div>
+        <div id="addTaskbtnAF">
+          <button id="createTaskCancleBtn" onclick="createTaskCancle()">
+            취소
+          </button>
+          <button id="createTaskBtn" onclick="createTask()">입력</button>
+          <button id="backBtn" onclick="backToMainScreen()" class="hide">
+            뒤로 가기
+          </button>
+          <button id="modifyTaskBtn" onclick="modifyTask()" class="hide">
+            수정
+          </button>
+          <button id="clearTaskBtn" onclick="clearTask()" class="hide">
+            할 일 완료
+          </button>
+          <button id="giveupTaskBtn" onclick="giveupTask()" class="hide">
+            제거
+          </button>
+          <button id="notModifyBtn" onclick="cancleModify()" class="hide">
+            수정 취소
+          </button>
+          <button id="modifyEndBtn" onclick="finishModify()" class="hide">
+            수정 완료
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="todolist.js"></script>
+  </body>
+</html>

@@ -1,0 +1,270 @@
+body {
+  position: relative;
+  box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
+  min-width: 127px;
+  min-height: 460px;
+  height: 100%;
+}
+div {
+  box-sizing: border-box;
+  padding: 0px;
+  margin: 0px;
+}
+button {
+  background-color: rgb(80, 80, 80);
+  border: 1px solid white;
+  color: white;
+  font-size: 20px;
+}
+@media only screen and (max-width: 150px) {
+  button {
+    font-size: 10px;
+  }
+}
+@media only screen and (min-width: 151px) and (max-width: 260px) {
+  button {
+    font-size: 15px;
+  }
+}
+.textDeco {
+  text-decoration: line-through;
+}
+.hide {
+  display: none;
+}
+.textCenter {
+  padding: 20px;
+  display: flex;
+  align-items: center;
+}
+.detailTaskInput {
+  width: 50%;
+  height: 20px;
+}
+.detailTaskAlignCenter {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+#preventScreen {
+  width: 100%;
+  height: 100%;
+  opacity: 0.5;
+  background-color: black;
+  z-index: 10;
+}
+/* 메인 화면 */
+#mainScreen {
+  position: fixed;
+  box-sizing: border-box;
+  background-color: lightgray;
+  height: 100%;
+  width: 100%;
+  padding: 15px;
+}
+#mainScreen #mainbtnAF {
+  height: 7%;
+}
+#mainScreen #mainbtnAF #mainbtnA {
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#mainScreen #mainbtnAF #mainbtnA span {
+  font-size: 20px;
+  font-style: italic;
+  font-weight: bold;
+}
+#menuBtn {
+  background-image: url(./img/검정_메뉴-removebg-preview.png);
+  background-size: cover;
+  display: flex;
+  min-width: 36.72px;
+  width: 3%;
+  padding: 0;
+}
+#menuBtn::after {
+  display: block;
+  padding-bottom: 100%;
+  content: "";
+}
+#mainScreen #mainbtnAF #mainbtnA #addTaskbtn {
+  min-width: 10%;
+  height: 80%;
+}
+#taskListAreaFrame {
+  height: 93%;
+}
+#taskListArea {
+  height: 100%;
+  background-color: rgb(129, 129, 129);
+  padding: 20px;
+  overflow: auto;
+}
+#taskListArea button {
+  height: 10%;
+  width: 100%;
+  border-radius: 30px;
+  border: 1px solid white;
+  background-color: lightgray;
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2%;
+  font-size: 25px;
+  margin-bottom: 10px;
+}
+/* 할 일 추가 화면 */
+
+#addTaskScreen {
+  position: absolute;
+  z-index: 100;
+  left: 5%;
+  top: 10%;
+  width: 90%;
+  height: 80%;
+  background-color: lightgray;
+  border: 1px solid white;
+  box-sizing: border-box;
+  padding: 10px;
+  margin: 0px;
+}
+#addTaskTotalFrame {
+  height: 100%;
+  box-sizing: border-box;
+  padding: 0px;
+  margin: 0px;
+  display: flex;
+  flex-direction: column;
+}
+#inputTitleFrame {
+  height: 15%;
+  width: 100%;
+  border: 1px solid white;
+  background-color: rgb(129, 129, 129);
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+#inputTitle {
+  width: 100%;
+  height: 100%;
+  border: 1px solid white;
+  background-color: rgb(160, 160, 160);
+  border-radius: 10px;
+  font-size: 20px;
+  padding: 20px;
+}
+#inputContentFrame {
+  height: 75%;
+  width: 100%;
+  border: 1px solid white;
+  background-color: rgb(129, 129, 129);
+  padding: 10px;
+}
+#inputContentFrame #inputContentArea {
+  height: 100%;
+  border: 1px solid white;
+  background-color: rgb(160, 160, 160);
+  border-radius: 10px;
+  padding: 10px;
+}
+#detailTaskA button {
+  border-radius: 50%;
+  border: none;
+  background: radial-gradient(circle, rgb(79, 79, 79) 40%, lightgray);
+}
+
+.btnCenter {
+  display: flex;
+  align-items: center;
+}
+#detailTask {
+  border-radius: 5px;
+  border: 1px solid white;
+  width: 50%;
+  height: 30px;
+  margin-right: 10px;
+}
+#inputContentFrame #inputContentArea #contentAddBtn {
+  background: radial-gradient(circle, rgb(79, 79, 79) 40%, lightgray);
+  margin: 5 0;
+  border-radius: 50%;
+  border: none;
+}
+#addTaskScreen #addTaskbtnAF {
+  height: 10%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#addTaskScreen #addTaskbtnAF button {
+  min-width: 41px;
+  width: 20%;
+  min-height: 27px;
+  height: 60%;
+}
+@media only screen and (max-width: 554px) {
+  #addTaskScreen #addTaskbtnAF button {
+    font-size: 10px;
+  }
+}
+@media only screen and (min-width: 555px) and (max-width: 655px) {
+  #addTaskScreen #addTaskbtnAF button {
+    font-size: 12px;
+  }
+}
+@media only screen and (min-width: 656px) and (max-width: 825px) {
+  #addTaskScreen #addTaskbtnAF button {
+    font-size: 15px;
+  }
+}
+.hideScreen {
+  display: none;
+}
+
+#inputTitleFrame {
+  height: 15%;
+  width: 100%;
+  border: 1px solid white;
+  background-color: rgb(129, 129, 129);
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+#taskTitle {
+  width: 100%;
+  height: 100%;
+  border: 1px solid white;
+  background-color: rgb(160, 160, 160);
+  border-radius: 10px;
+  font-size: 25px;
+  overflow: hidden;
+}
+#detailTaskA div {
+  font-size: 20px;
+}
+#detailTaskA .checkBox {
+  width: 15px;
+  height: 15px;
+}
+#fullDiv {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+#character {
+  position: absolute;
+  z-index: 1000;
+  left: 50%;
+  bottom: 0px;
+  width: 50px;
+  height: 50px;
+  background-image: url(./img/characterImg.png);
+  background-size: cover;
+}
