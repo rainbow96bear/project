@@ -1,0 +1,15 @@
+#gameScreen {
+  display: flex;
+  width: 1000px;
+  height: 1000px;
+}
+.row div {
+  width: 200px;
+  height: 200px;
+  border: 2px solid black;
+  border-radius: 10px;
+  margin: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

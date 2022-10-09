@@ -1,0 +1,12 @@
+#frame1 {
+  display: flex;
+  border: 2px solid black;
+  border-radius: 50%;
+  position: relative;
+  width: 50%;
+  background-color: skyblue;
+}
+#frame1::after {
+  content: "";
+  padding-bottom: 100%;
+}
