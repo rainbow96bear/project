@@ -1,4 +1,5 @@
 body {
+  overflow: hidden;
   position: relative;
   box-sizing: border-box;
   margin: 0px;
@@ -49,6 +50,7 @@ button {
   align-items: center;
 }
 #preventScreen {
+  box-sizing: border-box;
   width: 100%;
   height: 100%;
   opacity: 0.5;
@@ -60,6 +62,7 @@ button {
   position: fixed;
   box-sizing: border-box;
   background-color: lightgray;
+
   height: 100%;
   width: 100%;
   padding: 15px;
@@ -82,18 +85,13 @@ button {
   background-image: url(./img/검정_메뉴-removebg-preview.png);
   background-size: cover;
   display: flex;
-  min-width: 36.72px;
-  width: 3%;
+  width: 36.72px;
+  height: 36.72px;
   padding: 0;
 }
-#menuBtn::after {
-  display: block;
-  padding-bottom: 100%;
-  content: "";
-}
 #mainScreen #mainbtnAF #mainbtnA #addTaskbtn {
-  min-width: 10%;
-  height: 80%;
+  width: 36.72px;
+  height: 36.72px;
 }
 #taskListAreaFrame {
   height: 93%;
@@ -260,11 +258,21 @@ button {
 }
 #character {
   position: absolute;
-  z-index: 1000;
+  z-index: 500;
   left: 50%;
   bottom: 0px;
   width: 50px;
   height: 50px;
   background-image: url(./img/characterImg.png);
   background-size: cover;
+}
+#menuBar {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  z-index: 1000;
+  left: -250px;
+  width: 250px;
+  height: 100%;
+  background-color: white;
 }

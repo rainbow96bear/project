@@ -13,16 +13,19 @@
     <div id="mainScreen">
       <div id="mainbtnAF">
         <div id="mainbtnA">
-          <button id="menuBtn"></button>
+          <button id="menuBtn" onclick="menuBarOn()"></button>
           <span>To do List</span>
-          <button id="addTaskbtn" onclick="addTask()">할 일 추가</button>
+          <button id="addTaskbtn" onclick="addTask()">+</button>
         </div>
       </div>
       <div id="taskListAreaFrame">
         <div id="taskListArea"></div>
       </div>
     </div>
-    <div id="menuBar"></div>
+    <div id="menuBar">
+      <button onclick="menuBarOff()">x</button>
+      <button onclick="showCharacterState()">캐릭터 보기</button>
+    </div>
     <div id="preventScreen" class="hide"></div>
     <!-- 할 일 추가 화면 -->
     <div id="addTaskScreen" class="hide">
