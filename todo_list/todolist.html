@@ -7,13 +7,20 @@
     <link rel="stylesheet" href="todolist.css" />
   </head>
   <body>
-    <div id="character"></div>
-
     <!-- 메인 화면 -->
     <div id="mainScreen">
+      <div id="characterContainer">
+        <div id="character" onclick="speakNowDate()">
+          <img src="./img/characterImg.png" id="mainCharaterImg" />
+        </div>
+        <div id="lineBoxContainer" class="hide">
+          <div id="lineBox"></div>
+          <div id="tail"></div>
+        </div>
+      </div>
       <div id="mainbtnAF">
         <div id="mainbtnA">
-          <button id="menuBtn" onclick="menuBarOn()"></button>
+          <button id="menuBtn" onclick="menuBarOnOff(1)"></button>
           <span>To do List</span>
           <button id="addTaskbtn" onclick="addTask()">+</button>
         </div>
@@ -23,19 +30,48 @@
       </div>
     </div>
     <div id="menuBar">
-      <button onclick="menuBarOff()">x</button>
-      <button onclick="showCharacterState()">캐릭터 보기</button>
+      <button class="menubarButton" onclick="menuBarOnOff(-1)">x</button>
+      <button class="menubarButton" onclick="showCharacterState()">
+        캐릭터 보기
+      </button>
+      <button class="menubarButton" onclick="showClearTasks()">
+        지금까지 한 일
+      </button>
+      <button id="saveBtn" class="menubarButton">할 일 저장</button>
+      <button id="loadBtn" class="menubarButton">할 일 불러오기</button>
+    </div>
+    <div id="characterScreen" class="hide popScreenSetting">
+      <button
+        id="closeCharacterScreenBtn"
+        class="closeScreenBtn"
+        onclick="closeCharacterScreen()">
+        x
+      </button>
+      <div id="characterFrame" class="frame">
+        <div id="characterArea">
+          <div id="imgContainer">
+            <img id="characterImg" src="./img/characterImg.png" alt="" />
+          </div>
+        </div>
+        <div id="levelArea">
+          <span id="levelText" class="levelText">Lv :</span>
+          <span id="level" class="levelText"></span>
+        </div>
+      </div>
+      <div id="#characterExpFrame">
+        <progress id="characterExpBar" value="0" max="1"></progress>
+      </div>
     </div>
     <div id="preventScreen" class="hide"></div>
     <!-- 할 일 추가 화면 -->
-    <div id="addTaskScreen" class="hide">
+    <div id="addTaskScreen" class="hide popScreenSetting">
       <div id="addTaskTotalFrame">
-        <div id="inputTitleFrame">
-          <div id="taskTitle" class="hide"></div>
-          <input type="text" id="inputTitle" />
+        <div id="inputTitleFrame" class="frame">
+          <div id="taskTitleBox" class="hide box"></div>
+          <input type="text" id="inputTitleBox" class="box" />
         </div>
-        <div id="inputContentFrame">
-          <div id="inputContentArea">
+        <div id="detailContentFrame" class="frame">
+          <div id="inputContentBox" class="box">
             <div id="detailTaskA"></div>
             <div id="addDetailTaskA" class="btnCenter">
               <input type="text" id="detailTask" />
@@ -69,7 +105,44 @@
         </div>
       </div>
     </div>
-
+    <!-- 지금까지 한 일 화면 -->
+    <div id="clearTaskScreen" class="hide popScreenSetting">
+      <button
+        id="closeClearTaskScreenBtn"
+        class="closeScreenBtn"
+        onclick="closeClearTaskScreen()">
+        x
+      </button>
+      <div id="clearTaskFrame" class="frame"></div>
+    </div>
+    <div id="selectClearTaskScreen" class="hide popScreenSetting">
+      <button
+        id="closeSelectClearTaskScreenBtn"
+        class="closeScreenBtn"
+        onclick="closeSelectClearTaskScreen()">
+        x
+      </button>
+      <div id="selectClearTaskTitle" class="box"></div>
+      <div id="selectClearTaskDetailTasks" class="box"></div>
+    </div>
+    <div id="saveScreenFrame" class="frame hide">
+      <div id="saveScreenBox" class="box">
+        <input id="saveTitle" type="text" name="" id="" />
+        <div id="saveBtnDiv">
+          <button id="saveCancleBtn">취소</button>
+          <button id="saveCompleteBtn">저장</button>
+        </div>
+      </div>
+    </div>
+    <div id="loadScreenFrame" class="frame hide">
+      <div id="loadScreenBox" class="box">
+        <div id="loadTaskList"></div>
+        <div id="loadBtnDiv">
+          <button id="loadCancleBtn">취소</button>
+          <button id="loadCompleteBtn">선택</button>
+        </div>
+      </div>
+    </div>
     <script src="todolist.js"></script>
   </body>
 </html>

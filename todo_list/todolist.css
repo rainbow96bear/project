@@ -14,8 +14,10 @@ div {
   margin: 0px;
 }
 button {
-  background-color: rgb(80, 80, 80);
+  background-color: rgb(121, 121, 121);
   border: 1px solid white;
+  border-radius: 6px;
+  box-shadow: 2px 2px 2px 1px gray;
   color: white;
   font-size: 20px;
 }
@@ -57,12 +59,10 @@ button {
   background-color: black;
   z-index: 10;
 }
-/* 메인 화면 */
 #mainScreen {
   position: fixed;
   box-sizing: border-box;
   background-color: lightgray;
-
   height: 100%;
   width: 100%;
   padding: 15px;
@@ -89,18 +89,31 @@ button {
   height: 36.72px;
   padding: 0;
 }
-#mainScreen #mainbtnAF #mainbtnA #addTaskbtn {
-  width: 36.72px;
-  height: 36.72px;
+@media screen and (min-height: 640px) {
+  #mainScreen #mainbtnAF #mainbtnA #addTaskbtn {
+    width: 36.72px;
+    height: 36.72px;
+  }
+}
+@media only screen and (max-height: 640px) {
+  #addTaskbtn {
+    width: 25px;
+    height: 25px;
+  }
+  #menuBtn {
+    width: 25px;
+    height: 25px;
+  }
 }
 #taskListAreaFrame {
   height: 93%;
 }
 #taskListArea {
   height: 100%;
-  background-color: rgb(129, 129, 129);
+  background-color: white;
   padding: 20px;
   overflow: auto;
+  box-shadow: 3px 3px 3px 3px black;
 }
 #taskListArea button {
   height: 10%;
@@ -116,21 +129,6 @@ button {
   font-size: 25px;
   margin-bottom: 10px;
 }
-/* 할 일 추가 화면 */
-
-#addTaskScreen {
-  position: absolute;
-  z-index: 100;
-  left: 5%;
-  top: 10%;
-  width: 90%;
-  height: 80%;
-  background-color: lightgray;
-  border: 1px solid white;
-  box-sizing: border-box;
-  padding: 10px;
-  margin: 0px;
-}
 #addTaskTotalFrame {
   height: 100%;
   box-sizing: border-box;
@@ -139,36 +137,29 @@ button {
   display: flex;
   flex-direction: column;
 }
-#inputTitleFrame {
-  height: 15%;
-  width: 100%;
+.frame {
   border: 1px solid white;
-  background-color: rgb(129, 129, 129);
+  background-color: rgb(200, 200, 200);
+  border-radius: 3px;
+  box-shadow: 2px 2px 2px black;
   padding: 10px;
-  margin-bottom: 10px;
 }
-
-#inputTitle {
+.box {
   width: 100%;
   height: 100%;
   border: 1px solid white;
   background-color: rgb(160, 160, 160);
   border-radius: 10px;
+}
+#inputTitleBox {
   font-size: 20px;
   padding: 20px;
 }
-#inputContentFrame {
+#detailContentFrame {
   height: 75%;
   width: 100%;
-  border: 1px solid white;
-  background-color: rgb(129, 129, 129);
-  padding: 10px;
 }
-#inputContentFrame #inputContentArea {
-  height: 100%;
-  border: 1px solid white;
-  background-color: rgb(160, 160, 160);
-  border-radius: 10px;
+#inputContentBox {
   padding: 10px;
 }
 #detailTaskA button {
@@ -176,7 +167,6 @@ button {
   border: none;
   background: radial-gradient(circle, rgb(79, 79, 79) 40%, lightgray);
 }
-
 .btnCenter {
   display: flex;
   align-items: center;
@@ -222,32 +212,21 @@ button {
     font-size: 15px;
   }
 }
-.hideScreen {
-  display: none;
-}
-
 #inputTitleFrame {
   height: 15%;
   width: 100%;
-  border: 1px solid white;
-  background-color: rgb(129, 129, 129);
   padding: 10px;
   margin-bottom: 10px;
 }
 
-#taskTitle {
-  width: 100%;
-  height: 100%;
-  border: 1px solid white;
-  background-color: rgb(160, 160, 160);
-  border-radius: 10px;
+#taskTitleBox {
   font-size: 25px;
   overflow: hidden;
 }
 #detailTaskA div {
   font-size: 20px;
 }
-#detailTaskA .checkBox {
+.checkBox {
   width: 15px;
   height: 15px;
 }
@@ -256,15 +235,41 @@ button {
   width: 100%;
   height: 100%;
 }
-#character {
+#characterContainer {
   position: absolute;
   z-index: 500;
-  left: 50%;
   bottom: 0px;
+  width: 150px;
+  height: fit-content;
+  transform: translateX(0);
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+}
+#character {
   width: 50px;
   height: 50px;
-  background-image: url(./img/characterImg.png);
-  background-size: cover;
+}
+#character #mainCharaterImg {
+  width: 50px;
+  height: 50px;
+}
+.lineBoxContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#tail {
+  background-color: lightgray;
+  width: 10px;
+  height: 10px;
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+#lineBox {
+  background-color: lightgray;
+  border: none;
+  border-radius: 7px;
+  padding: 2px;
 }
 #menuBar {
   display: flex;
@@ -275,4 +280,175 @@ button {
   width: 250px;
   height: 100%;
   background-color: white;
+  overflow: hidden;
+}
+.menubarButton {
+  margin-bottom: 10px;
+}
+.characterCenter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#characterFrame {
+  width: 100%;
+  height: 90%;
+  box-shadow: none;
+  border-radius: 10px;
+}
+.closeScreenBtn {
+  position: absolute;
+  z-index: 100000;
+  right: 10px;
+}
+#characterArea {
+  position: relative;
+  width: 100%;
+  height: 85%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#imgContainer {
+  position: absolute;
+  bottom: 0;
+  width: fit-content;
+  height: fit-content;
+  transform: translateX(0);
+}
+#characterImg {
+  width: 80px;
+  height: 80px;
+}
+#characterExpFrame {
+  width: 100%;
+  height: 10%;
+  background-color: gray;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  justify-content: center;
+}
+#characterExpBar {
+  width: 100%;
+  height: 7%;
+}
+#characterExpBar {
+  appearance: none;
+}
+#characterExpBar::-webkit-progress-bar {
+  background: #f0f0f0;
+  border-radius: 10px;
+}
+#characterExpBar::-webkit-progress-value {
+  border-radius: 10px;
+  background: #1d976c;
+}
+#levelArea {
+  height: 15%;
+  display: flex;
+  align-items: center;
+}
+.levelText {
+  padding-left: 10px;
+  font-size: 40px;
+}
+/* 지금까지 한 일 화면 */
+.popScreenSetting {
+  position: absolute;
+  z-index: 100;
+  left: 5%;
+  top: 10%;
+  width: 90%;
+  height: 80%;
+  background-color: white;
+  border: 1px solid white;
+  box-sizing: border-box;
+  box-shadow: 3px 3px 3px 2px black;
+  padding: 10px;
+  margin: 0px;
+}
+#clearTaskFrame {
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+  overflow: auto;
+}
+#clearTaskFrame button {
+  height: 10%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2%;
+  font-size: 25px;
+  margin-bottom: 10px;
+}
+#closeSelectClearTaskScreenBtn {
+  position: absolute;
+  z-index: 100000;
+  right: 10px;
+}
+#selectClearTaskTitle {
+  width: 100%;
+  height: 7%;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#selectClearTaskDetailTasks {
+  border-radius: 10px;
+  width: 100%;
+  height: 92%;
+  padding: 10px;
+}
+#saveScreenFrame {
+  position: absolute;
+  left: 15%;
+  top: 42%;
+  width: 70%;
+  height: 16%;
+}
+#saveScreenBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+#saveTitle {
+  height: 50%;
+  width: 90%;
+}
+#saveBtnDiv {
+  margin-top: 10px;
+  width: 50%;
+  display: flex;
+  justify-content: space-around;
+}
+#saveBtnDiv button {
+  width: 30%;
+}
+#loadScreenFrame {
+  position: absolute;
+  left: 5%;
+  top: 10%;
+  width: 90%;
+  height: 80%;
+}
+#loadScreenBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+#loadTaskList {
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.select {
+  border: 2px solid red;
 }
