@@ -1,70 +1,46 @@
 const mainScreen = document.getElementById("mainScreen");
-const mainbtnAF = document.getElementById("mainbtnAF");
-const taskListAreaFrame = document.getElementById("taskListAreaFrame");
-const addTaskbtn = document.getElementById("addTaskbtn");
-const addTaskScreen = document.getElementById("addTaskScreen");
-const inputTitleBox = document.getElementById("inputTitleBox");
+const taskScreen = document.getElementById("taskScreen");
+const input_TaskTitleBox = document.getElementById("input_TaskTitleBox");
 const taskListArea = document.getElementById("taskListArea");
-const createTaskBtn = document.getElementById("createTaskBtn");
-const createTaskCancleBtn = document.getElementById("createTaskCancleBtn");
+const createTaskBtnArea = document.getElementById("createTaskBtnArea");
+const taskFunctionBtnArea = document.getElementById("taskFunctionBtnArea");
+const taskModifyBtnArea = document.getElementById("taskModifyBtnArea");
 const taskTitleBox = document.getElementById("taskTitleBox");
-const taskModifyScreen = document.getElementById("taskModifyScreen");
-const modifyTitle = document.getElementById("modifyTitle");
-const giveupTaskBtn = document.getElementById("giveupTaskBtn");
-const modifyTaskBtn = document.getElementById("modifyTaskBtn");
-const clearTaskBtn = document.getElementById("clearTaskBtn");
-const modifyEndBtn = document.getElementById("modifyEndBtn");
-const notModifyBtn = document.getElementById("notModifyBtn");
-const contentAddBtn = document.getElementById("contentAddBtn");
-const detailTask = document.getElementById("detailTask");
-const detailTaskA = document.getElementById("detailTaskA");
-const backBtn = document.getElementById("backBtn");
-const addDetailTaskA = document.getElementById("addDetailTaskA");
+const input_detailTask = document.getElementById("input_detailTask");
+const detailTaskList = document.getElementById("detailTaskList");
+const addDetailTaskArea = document.getElementById("addDetailTaskArea");
 const characterContainer = document.getElementById("characterContainer");
 const preventScreen = document.getElementById("preventScreen");
 const menuBar = document.getElementById("menuBar");
-const menuBtn = document.getElementById("menuBtn");
 const characterScreen = document.getElementById("characterScreen");
 const characterExpBar = document.getElementById("characterExpBar");
 const level = document.getElementById("level");
-const characterExpFrame = document.getElementById("characterExpFrame");
-const characterArea = document.getElementById("characterArea");
 const characterImg = document.getElementById("characterImg");
-const imgContainer = document.getElementById("imgContainer");
-const lineBox = document.getElementById("lineBox");
+const speechBubble = document.getElementById("speechBubble");
 const mainCharaterImg = document.getElementById("mainCharaterImg");
-const lineBoxContainer = document.getElementById("lineBoxContainer");
+const speechBubbleContainer = document.getElementById("speechBubbleContainer");
 const clearTaskScreen = document.getElementById("clearTaskScreen");
-const clearTaskFrame = document.getElementById("clearTaskFrame");
+const clearTaskList = document.getElementById("clearTaskList");
 const selectClearTaskScreen = document.getElementById("selectClearTaskScreen");
 const selectClearTaskTitle = document.getElementById("selectClearTaskTitle");
 const selectClearTaskDetailTasks = document.getElementById(
   "selectClearTaskDetailTasks"
 );
-const closeClearTaskScreenBtn = document.getElementById(
-  "closeClearTaskScreenBtn"
-);
 const saveScreenFrame = document.getElementById("saveScreenFrame");
 const saveTitle = document.getElementById("saveTitle");
 const loadScreenFrame = document.getElementById("loadScreenFrame");
 const loadTaskList = document.getElementById("loadTaskList");
-
 let nowDate = new Date();
 let nowMonth = nowDate.getMonth() + 1;
 let nowDay = nowDate.getDate();
-
 let checkModify = 0;
 let checkNewDetailTaskNum = 0;
-
+let prevSelect = 0;
 let progressMax = 0;
 let progressValue = 0;
-
-let characterPositionX = mainScreen.offsetWidth / 2;
-let characterPositionY = 0;
 let moveDirection = 0;
 let moveTerm = 3500;
 let moveLength = 0;
-
 let saveTaskList = [];
 let taskArr = [];
 class Task {
@@ -79,13 +55,10 @@ let seletctLoadTask = "";
 let nowTaskIdx = 0;
 let tempDetailTask = [];
 let autoMoving;
-let autoImgMoving;
 let autoSpeak;
 let moving = [];
 let startPos = 0;
 let endPos = 0;
-let imgStartPos = 0;
-let imgEndPos = 0;
 let checkAutoSpeak = 0;
 let mycharacter = [];
 class characterState {
@@ -99,50 +72,40 @@ class characterState {
 mycharacter.push(new characterState());
 let characterLine = [
   `오늘은\n${nowMonth}월${nowDay}일입니다.`,
-  // "★이몸 등장★",
-  // "안녕",
-  // "안녕하세요.",
+  "★이몸 등장★",
+  "안녕",
+  "안녕하세요.",
   "아~\n하기싫다~",
-  "아~\n정말 하기싫다~",
-  "아~\n진짜 하기싫다~",
-  "아~\n엄청 하기싫다~",
-  // "오늘 점심\n뭐 먹지?",
+  "오늘 점심\n뭐 먹지?",
 ];
-
 // class와 배열 이용
 function addTask() {
-  inputTitleBox.value = "";
+  input_TaskTitleBox.value = "";
   taskArr.push(new Task());
   nowTaskIdx = taskArr.length - 1;
   const tempBundle = document.createElement("div");
-  detailTaskA.append(tempBundle);
-  addTaskScreen.classList.remove("hide");
-  inputTitleBox.classList.remove("hide");
+  detailTaskList.append(tempBundle);
+  taskScreen.classList.remove("hide");
+  input_TaskTitleBox.classList.remove("hide");
   taskTitleBox.classList.add("hide");
   taskTitleBox.classList.remove("textCenter");
-  createTaskCancleBtn.classList.remove("hide");
-  createTaskBtn.classList.remove("hide");
-  giveupTaskBtn.classList.add("hide");
-  modifyTaskBtn.classList.add("hide");
-  clearTaskBtn.classList.add("hide");
-  notModifyBtn.classList.add("hide");
-  modifyEndBtn.classList.add("hide");
-  backBtn.classList.add("hide");
-  addDetailTaskA.classList.remove("hide");
-  addDetailTaskA.classList.add("btnCenter");
+  createTaskBtnArea.classList.remove("hide");
+  taskFunctionBtnArea.classList.add("hide");
+  taskModifyBtnArea.classList.add("hide");
+  addDetailTaskArea.classList.remove("hide");
+  addDetailTaskArea.classList.add("alignItemsCenter");
   preventScreen.classList.remove("hide");
 }
-
 function createTask() {
-  if (inputTitleBox.value == "") {
+  if (input_TaskTitleBox.value == "") {
     alert("할 일의 제목을 입력하세요.");
   } else {
     makeTaskList(taskArr, nowTaskIdx, "newTask");
-    addTaskScreen.classList.add("hide");
+    taskScreen.classList.add("hide");
     preventScreen.classList.add("hide");
-    detailTaskA.firstElementChild.remove();
-    inputTitleBox.value = "";
-    detailTask.value = "";
+    detailTaskList.firstElementChild.remove();
+    input_TaskTitleBox.value = "";
+    input_detailTask.value = "";
     progressValue = 0;
   }
 }
@@ -160,20 +123,24 @@ function makeTaskList(arr, idx, what) {
     modifyScreenOn(arr, idx);
   };
   if (what == "newTask") {
-    newSpan.append(inputTitleBox.value);
-    arr[idx].taskTitleBox = inputTitleBox.value;
-    for (let i = 0; i < detailTaskA.firstElementChild.childElementCount; i++) {
+    newSpan.append(input_TaskTitleBox.value);
+    arr[idx].taskTitleBox = input_TaskTitleBox.value;
+    for (
+      let i = 0;
+      i < detailTaskList.firstElementChild.childElementCount;
+      i++
+    ) {
       arr[idx].detailTask.push(
-        detailTaskA.firstElementChild.children[i].children[1].value
+        detailTaskList.firstElementChild.children[i].children[1].value
       );
-      if (detailTaskA.firstElementChild.children[i].children[0].checked) {
+      if (detailTaskList.firstElementChild.children[i].children[0].checked) {
         progressValue++;
         arr[idx].check.push(1);
       } else {
         arr[idx].check.push(0);
       }
     }
-    newProgress.max = detailTaskA.firstElementChild.childElementCount;
+    newProgress.max = detailTaskList.firstElementChild.childElementCount;
   } else if (what == "loadTask") {
     newSpan.innerText = arr[idx].taskTitleBox;
     for (let i = 0; i < arr[idx].check.length; i++) {
@@ -185,30 +152,27 @@ function makeTaskList(arr, idx, what) {
   }
   newProgress.value = progressValue;
   progressValue = 0;
+  newBtn.classList.add("taskTitleBtn");
   newBtn.appendChild(newProgress);
   taskListArea.append(newBtn);
 }
 function createTaskCancle() {
-  inputTitleBox.value = "";
-  detailTask.value = "";
-  addTaskScreen.classList.add("hide");
+  input_TaskTitleBox.value = "";
+  input_detailTask.value = "";
+  taskScreen.classList.add("hide");
   preventScreen.classList.add("hide");
-  detailTaskA.firstElementChild.remove();
+  detailTaskList.firstElementChild.remove();
 }
-
 function modifyScreenOn(arr, idx) {
-  addTaskScreen.classList.remove("hide");
+  taskScreen.classList.remove("hide");
   taskTitleBox.classList.remove("hide");
   taskTitleBox.classList.add("textCenter");
-  createTaskCancleBtn.classList.add("hide");
-  createTaskBtn.classList.add("hide");
-  giveupTaskBtn.classList.add("hide");
-  modifyTaskBtn.classList.remove("hide");
-  clearTaskBtn.classList.remove("hide");
-  inputTitleBox.classList.add("hide");
-  backBtn.classList.remove("hide");
-  addDetailTaskA.classList.add("hide");
-  addDetailTaskA.classList.remove("btnCenter");
+  createTaskBtnArea.classList.add("hide");
+  taskModifyBtnArea.classList.add("hide");
+  taskFunctionBtnArea.classList.remove("hide");
+  input_TaskTitleBox.classList.add("hide");
+  addDetailTaskArea.classList.add("hide");
+  addDetailTaskArea.classList.remove("alignItemsCenter");
   preventScreen.classList.remove("hide");
 
   taskTitleBox.innerText = arr[idx].taskTitleBox;
@@ -230,11 +194,10 @@ function modifyScreenOn(arr, idx) {
     newDiv.append(newSpan);
     tempDiv.append(newDiv);
   }
-  detailTaskA.append(tempDiv);
+  detailTaskList.append(tempDiv);
 }
-
 function addDetailTask() {
-  if (detailTask.value == "") {
+  if (input_detailTask.value == "") {
     alert("세부 항목을 입력하세요.");
   } else {
     const newDiv = document.createElement("div");
@@ -254,19 +217,20 @@ function addDetailTask() {
     newCheckBox.type = "checkbox";
     newCheckBox.classList.add("checkBox");
     newInput.type = "text";
-    newInput.value = detailTask.value;
-    newInput.classList.add("detailTaskInput");
+    newInput.value = input_detailTask.value;
+    newInput.classList.add("detailTask_InputBox");
     newDiv.appendChild(newCheckBox);
     newDiv.appendChild(newInput);
     newDiv.appendChild(newButton);
-    detailTaskA.firstElementChild.append(newDiv);
-    detailTask.value = "";
+    newDiv.classList.add("alignItemsCenter");
+    detailTaskList.firstElementChild.append(newDiv);
+    input_detailTask.value = "";
   }
 }
 function backToMainScreen() {
   let tempValue = 0;
-  for (let i = 0; i < detailTaskA.firstElementChild.childElementCount; i++) {
-    if (detailTaskA.firstElementChild.children[i].children[0].checked) {
+  for (let i = 0; i < detailTaskList.firstElementChild.childElementCount; i++) {
+    if (detailTaskList.firstElementChild.children[i].children[0].checked) {
       taskArr[nowTaskIdx].check[i] = 1;
       tempValue++;
     } else {
@@ -275,36 +239,31 @@ function backToMainScreen() {
   }
   document.getElementById(`taskProgress_${nowTaskIdx}`).value = tempValue;
   document.getElementById(`taskProgress_${nowTaskIdx}`).max =
-    detailTaskA.firstElementChild.childElementCount;
-  addTaskScreen.classList.add("hide");
+    detailTaskList.firstElementChild.childElementCount;
+  taskScreen.classList.add("hide");
   preventScreen.classList.add("hide");
-  backBtn.classList.add("hide");
-  detailTaskA.firstElementChild.remove();
+  detailTaskList.firstElementChild.remove();
 }
 function modifyTask() {
   for (let i = 0; i < taskArr[nowTaskIdx].detailTask.length; i++) {
-    if (detailTaskA.firstElementChild.children[i].children[0].checked) {
+    if (detailTaskList.firstElementChild.children[i].children[0].checked) {
       taskArr[nowTaskIdx].check[i] = 1;
     } else {
       taskArr[nowTaskIdx].check[i] = 0;
     }
   }
-  detailTaskA.firstElementChild.remove();
+  detailTaskList.firstElementChild.remove();
   checkNewDetailTaskNum = 0;
   tempDetailTask = [];
   checkModify++;
-  inputTitleBox.value = taskArr[nowTaskIdx].taskTitleBox;
-  inputTitleBox.classList.remove("hide");
+  input_TaskTitleBox.value = taskArr[nowTaskIdx].taskTitleBox;
+  input_TaskTitleBox.classList.remove("hide");
   taskTitleBox.classList.add("hide");
   taskTitleBox.classList.remove("textCenter");
-  giveupTaskBtn.classList.remove("hide");
-  modifyTaskBtn.classList.add("hide");
-  clearTaskBtn.classList.add("hide");
-  modifyEndBtn.classList.remove("hide");
-  notModifyBtn.classList.remove("hide");
-  backBtn.classList.add("hide");
-  addDetailTaskA.classList.remove("hide");
-  addDetailTaskA.classList.add("btnCenter");
+  taskFunctionBtnArea.classList.add("hide");
+  taskModifyBtnArea.classList.remove("hide");
+  addDetailTaskArea.classList.remove("hide");
+  addDetailTaskArea.classList.add("alignItemsCenter");
   const tempDiv = document.createElement("div");
   for (let i = 0; i < taskArr[nowTaskIdx].detailTask.length; i++) {
     const newDiv = document.createElement("div");
@@ -326,15 +285,20 @@ function modifyTask() {
     newDiv.append(newButton);
     tempDiv.append(newDiv);
   }
-  detailTaskA.append(tempDiv);
+  detailTaskList.append(tempDiv);
 }
 function clearTask() {
   clearTaskArr.push(taskArr[nowTaskIdx]);
   document.getElementById(`taskTitleID_${nowTaskIdx}`).remove();
-  addTaskScreen.classList.add("hide");
+  taskScreen.classList.add("hide");
   preventScreen.classList.add("hide");
-  backBtn.classList.add("hide");
-  detailTaskA.firstElementChild.remove();
+  detailTaskList.firstElementChild.remove();
+  taskArr[nowTaskIdx] = "";
+  taskArr = taskArr.filter((item) => {
+    if (item != "") {
+      return item;
+    }
+  });
   mycharacter[0].exp++;
   if (mycharacter[0].exp == mycharacter[0].maxExp) {
     mycharacter[0].exp = 0;
@@ -343,57 +307,57 @@ function clearTask() {
 }
 function giveupTask() {
   document.getElementById(`taskTitleID_${nowTaskIdx}`).remove();
-  addTaskScreen.classList.add("hide");
+  taskScreen.classList.add("hide");
   preventScreen.classList.add("hide");
-  backBtn.classList.add("hide");
-  notModifyBtn.classList.add("hide");
-  modifyEndBtn.classList.add("hide");
-  detailTaskA.firstElementChild.remove();
+  taskModifyBtnArea.classList.add("hide");
+  detailTaskList.firstElementChild.remove();
+  taskArr[nowTaskIdx] = "";
+  // taskArr = taskArr.filter((item) => {
+  //   if (item != "") {
+  //     return item;
+  //   }
+  // });
   checkModify = 0;
 }
 function cancleModify() {
-  addTaskScreen.classList.add("hide");
+  taskScreen.classList.add("hide");
   preventScreen.classList.add("hide");
-  inputTitleBox.classList.add("hide");
+  input_TaskTitleBox.classList.add("hide");
   taskTitleBox.classList.remove("hide");
   taskTitleBox.classList.add("textCenter");
-  giveupTaskBtn.classList.remove("hide");
-  modifyTaskBtn.classList.remove("hide");
-  clearTaskBtn.classList.remove("hide");
-  notModifyBtn.classList.add("hide");
-  modifyEndBtn.classList.add("hide");
-  addDetailTaskA.classList.add("hide");
-  addDetailTaskA.classList.remove("btnCenter");
-  detailTaskA.firstElementChild.remove();
+  taskModifyBtnArea.classList.add("hide");
+  addDetailTaskArea.classList.add("hide");
+  addDetailTaskArea.classList.remove("alignItemsCenter");
+  detailTaskList.firstElementChild.remove();
   checkModify = 0;
-  detailTask.value = "";
+  input_detailTask.value = "";
 }
 function finishModify() {
-  if (inputTitleBox.value == "") {
+  if (input_TaskTitleBox.value == "") {
     alert("할 일의 제목을 입력하세요.");
   } else {
     document.getElementById(
       `taskTitleID_${nowTaskIdx}`
-    ).firstElementChild.innerText = inputTitleBox.value;
-    taskArr[nowTaskIdx].taskTitleBox = inputTitleBox.value;
-    addTaskScreen.classList.add("hide");
+    ).firstElementChild.innerText = input_TaskTitleBox.value;
+    taskArr[nowTaskIdx].taskTitleBox = input_TaskTitleBox.value;
+    taskScreen.classList.add("hide");
     preventScreen.classList.add("hide");
-    inputTitleBox.classList.add("hide");
+    input_TaskTitleBox.classList.add("hide");
     taskTitleBox.classList.remove("hide");
     taskTitleBox.classList.add("textCenter");
-    giveupTaskBtn.classList.remove("hide");
-    modifyTaskBtn.classList.remove("hide");
-    clearTaskBtn.classList.remove("hide");
-    notModifyBtn.classList.add("hide");
-    modifyEndBtn.classList.add("hide");
-    addDetailTaskA.classList.add("hide");
-    addDetailTaskA.classList.remove("btnCenter");
+    taskModifyBtnArea.classList.add("hide");
+    addDetailTaskArea.classList.add("hide");
+    addDetailTaskArea.classList.remove("alignItemsCenter");
     let tempValue = 0;
-    for (let i = 0; i < detailTaskA.firstElementChild.childElementCount; i++) {
+    for (
+      let i = 0;
+      i < detailTaskList.firstElementChild.childElementCount;
+      i++
+    ) {
       tempDetailTask.push(
-        detailTaskA.firstElementChild.children[i].children[1].value
+        detailTaskList.firstElementChild.children[i].children[1].value
       );
-      if (detailTaskA.firstElementChild.children[i].children[0].checked) {
+      if (detailTaskList.firstElementChild.children[i].children[0].checked) {
         taskArr[nowTaskIdx].check[i] = 1;
         tempValue++;
       } else {
@@ -402,10 +366,10 @@ function finishModify() {
     }
     document.getElementById(`taskProgress_${nowTaskIdx}`).value = tempValue;
     document.getElementById(`taskProgress_${nowTaskIdx}`).max =
-      detailTaskA.firstElementChild.childElementCount;
+      detailTaskList.firstElementChild.childElementCount;
     taskArr[nowTaskIdx].detailTask = [...tempDetailTask];
-    detailTaskA.firstElementChild.remove();
-    detailTask.value = "";
+    detailTaskList.firstElementChild.remove();
+    input_detailTask.value = "";
     checkModify = 0;
   }
 }
@@ -435,47 +399,37 @@ function moveCharacter(moveLength) {
   startPos = endPos;
 }
 function lineBoxHide() {
-  lineBox.innerText = "";
-  lineBoxContainer.classList.toggle("hide");
-  lineBoxContainer.classList.toggle("lineBoxContainer");
+  speechBubble.innerText = "";
+  speechBubbleContainer.classList.toggle("hide");
 }
 autoMoving = setInterval(() => {
   moveLength = parseInt(Math.random() * 3 + 1);
   moveCharacter(moveLength);
 }, moveTerm);
 function speak(num) {
-  lineBoxContainer.classList.remove("hide");
-  lineBoxContainer.classList.add("lineBoxContainer");
-  lineBox.innerText = characterLine[num];
+  speechBubbleContainer.classList.remove("hide");
+  speechBubble.innerText = characterLine[num];
   setTimeout(() => {
     lineBoxHide();
-  }, 7000);
+  }, 3000);
 }
 function autoSpeakfunc() {
   let num = parseInt(Math.random() * (characterLine.length - 1) + 1);
   speak(num);
 }
-autoSpeak = setInterval(() => autoSpeakfunc(), 10000);
+autoSpeak = setInterval(() => autoSpeakfunc(), 8000);
 function speakNowDate() {
   clearInterval(autoSpeak);
-  lineBoxContainer.classList.remove("hide");
-  lineBoxContainer.classList.add("lineBoxContainer");
-  lineBox.innerText = characterLine[0];
+  speechBubbleContainer.classList.remove("hide");
+  speechBubble.innerText = characterLine[0];
   if (checkAutoSpeak == 0) {
     checkAutoSpeak++;
     setTimeout(() => {
-      autoSpeak = setInterval(() => autoSpeakfunc(), 10000);
+      autoSpeak = setInterval(() => autoSpeakfunc(), 8000);
       checkAutoSpeak--;
-    }, 7000);
+    }, 3000);
   }
 }
-// 캐릭터 좌우
-function characterDirection() {
-  characterContainer.animate({
-    transform: [`rotateX(180deg)`],
-  });
-}
-// 메뉴 버튼 기능
 function menuBarOnOff(n) {
   preventScreen.classList.toggle("hide");
   menuBar.animate(
@@ -489,7 +443,6 @@ function menuBarOnOff(n) {
     }
   );
 }
-
 function showCharacterState() {
   menuBarOnOff(-1);
   preventScreen.classList.remove("hide");
@@ -505,7 +458,6 @@ function closeCharacterScreen() {
   characterContainer.classList.remove("hide");
   characterContainer.style.opacity = 1;
 }
-
 function showClearTasks() {
   menuBarOnOff(-1);
   preventScreen.classList.remove("hide");
@@ -515,6 +467,7 @@ function showClearTasks() {
   for (let i = 0; i < clearTaskArr.length; i++) {
     const newButton = document.createElement("button");
     newButton.innerText = clearTaskArr[i].taskTitleBox;
+    newButton.classList.add("taskTitleBtn");
     newButton.addEventListener("click", () => {
       selectClearTaskScreen.classList.remove("hide");
       selectClearTaskTitle.innerText = clearTaskArr[i].taskTitleBox;
@@ -528,12 +481,12 @@ function showClearTasks() {
     });
     newTempBundle.append(newButton);
   }
-  clearTaskFrame.append(newTempBundle);
+  clearTaskList.append(newTempBundle);
 }
 function closeClearTaskScreen() {
   preventScreen.classList.add("hide");
   clearTaskScreen.classList.add("hide");
-  clearTaskFrame.firstElementChild.remove();
+  clearTaskList.firstElementChild.remove();
 }
 function closeSelectClearTaskScreen() {
   selectClearTaskDetailTasks.firstElementChild.remove();
@@ -544,7 +497,6 @@ saveBtn.onclick = () => {
   menuBarOnOff(-1);
   preventScreen.classList.remove("hide");
   saveScreenFrame.classList.remove("hide");
-  // localStorage.setItem("할 일 목록", JSON.stringify(taskArr));
 };
 const loadBtn = document.getElementById("loadBtn");
 loadBtn.onclick = function test() {
@@ -552,15 +504,37 @@ loadBtn.onclick = function test() {
   preventScreen.classList.remove("hide");
   loadScreenFrame.classList.remove("hide");
   const newDiv = document.createElement("div");
+  newDiv.style.height = "100%";
+  newDiv.style.width = "100%";
   let tempArr = localStorage.getItem("saveTaskList");
   saveTaskList = JSON.parse(tempArr);
+  let checkNum = 0;
   saveTaskList.forEach((item) => {
     const newBtn = document.createElement("button");
-    newBtn.innerText = item;
+    const newSpan = document.createElement("span");
+    const deleteBtn = document.createElement("button");
+    deleteBtn.innerText = "제거";
+    deleteBtn.id = `deleteBtnID_${checkNum}`;
+    deleteBtn.onclick = () => {
+      console.log(saveTaskList[deleteBtn.id.slice(12)]);
+      saveTaskList = saveTaskList.filter((item) => {
+        if (item != "") {
+          return item;
+        }
+      });
+      deleteBtn.parentElement.remove();
+      localStorage.setItem("saveTaskList", JSON.stringify(saveTaskList));
+    };
+    newSpan.innerText = item;
+    newBtn.classList.add("taskTitleBtn");
+    newBtn.append(newSpan);
+    newBtn.append(deleteBtn);
     newBtn.onclick = () => {
-      seletctLoadTask = newBtn.innerText;
+      newBtn.classList.toggle("select");
+      seletctLoadTask = newSpan.innerText;
     };
     newDiv.append(newBtn);
+    checkNum++;
   });
   loadTaskList.append(newDiv);
 };
@@ -572,12 +546,21 @@ saveCancleBtn.onclick = () => {
 };
 const saveCompleteBtn = document.getElementById("saveCompleteBtn");
 saveCompleteBtn.onclick = () => {
-  preventScreen.classList.add("hide");
-  saveScreenFrame.classList.add("hide");
-  saveTaskList.push(saveTitle.value);
-  localStorage.setItem("saveTaskList", JSON.stringify(saveTaskList));
-  localStorage.setItem(saveTitle.value, JSON.stringify(taskArr));
-  saveTitle.value = "";
+  if (saveTitle.value == "") {
+    alert("저장할 이름을 작성해주세요.");
+  } else {
+    preventScreen.classList.add("hide");
+    saveScreenFrame.classList.add("hide");
+    taskArr = taskArr.filter((item) => {
+      if (item != "") {
+        return item;
+      }
+    });
+    saveTaskList.push(saveTitle.value);
+    localStorage.setItem("saveTaskList", JSON.stringify(saveTaskList));
+    localStorage.setItem(saveTitle.value, JSON.stringify(taskArr));
+    saveTitle.value = "";
+  }
 };
 const loadCancleBtn = document.getElementById("loadCancleBtn");
 loadCancleBtn.onclick = () => {

@@ -14,6 +14,7 @@ div {
   margin: 0px;
 }
 button {
+  width: fit-content;
   background-color: rgb(121, 121, 121);
   border: 1px solid white;
   border-radius: 6px;
@@ -31,6 +32,28 @@ button {
     font-size: 15px;
   }
 }
+.popScreenSetting {
+  z-index: 100;
+  position: absolute;
+  left: 5%;
+  top: 10%;
+  width: 90%;
+  height: 80%;
+  background-color: white;
+  border: 1px solid white;
+  box-sizing: border-box;
+  box-shadow: 3px 3px 3px 2px black;
+  padding: 10px;
+  margin: 0px;
+}
+.select {
+  border: 2px solid red;
+}
+.alignItemsCenterColumn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .textDeco {
   text-decoration: line-through;
 }
@@ -38,16 +61,11 @@ button {
   display: none;
 }
 .textCenter {
-  padding: 20px;
+  padding-left: 10px;
   display: flex;
   align-items: center;
 }
-.detailTaskInput {
-  width: 50%;
-  height: 20px;
-}
-.detailTaskAlignCenter {
-  width: 100%;
+.alignItemsCenter {
   display: flex;
   align-items: center;
 }
@@ -62,27 +80,28 @@ button {
 #mainScreen {
   position: fixed;
   box-sizing: border-box;
-  background-color: lightgray;
+  background-color: ivory;
   height: 100%;
   width: 100%;
   padding: 15px;
 }
-#mainScreen #mainbtnAF {
+#mainTopBanner {
   height: 7%;
 }
-#mainScreen #mainbtnAF #mainbtnA {
+#mainTopBannerBox {
   height: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-#mainScreen #mainbtnAF #mainbtnA span {
+#mainTopBannerBox span {
   font-size: 20px;
   font-style: italic;
   font-weight: bold;
 }
+/* topbanner 버튼 크기 설정 필요 */
 #menuBtn {
-  background-image: url(./img/검정_메뉴-removebg-preview.png);
+  background-image: url(./img/blackMenu.png);
   background-size: cover;
   display: flex;
   width: 36.72px;
@@ -90,7 +109,7 @@ button {
   padding: 0;
 }
 @media screen and (min-height: 640px) {
-  #mainScreen #mainbtnAF #mainbtnA #addTaskbtn {
+  #mainScreen #mainTopBanner #mainTopBannerBox #addTaskbtn {
     width: 36.72px;
     height: 36.72px;
   }
@@ -115,12 +134,11 @@ button {
   overflow: auto;
   box-shadow: 3px 3px 3px 3px black;
 }
-#taskListArea button {
+.taskTitleBtn {
   height: 10%;
   width: 100%;
   border-radius: 30px;
-  border: 1px solid white;
-  background-color: lightgray;
+  background-color: ivory;
   color: black;
   display: flex;
   align-items: center;
@@ -129,17 +147,12 @@ button {
   font-size: 25px;
   margin-bottom: 10px;
 }
-#addTaskTotalFrame {
+#taskFrame {
   height: 100%;
-  box-sizing: border-box;
-  padding: 0px;
-  margin: 0px;
-  display: flex;
-  flex-direction: column;
 }
 .frame {
-  border: 1px solid white;
-  background-color: rgb(200, 200, 200);
+  border: 2px solid lightgray;
+  background-color: ivory;
   border-radius: 3px;
   box-shadow: 2px 2px 2px black;
   padding: 10px;
@@ -147,93 +160,83 @@ button {
 .box {
   width: 100%;
   height: 100%;
-  border: 1px solid white;
-  background-color: rgb(160, 160, 160);
+  border: none;
+  background-color: ivory;
   border-radius: 10px;
 }
-#inputTitleBox {
+#input_TaskTitleBox {
   font-size: 20px;
   padding: 20px;
 }
-#detailContentFrame {
+#detailTaskContainer {
   height: 75%;
   width: 100%;
 }
 #inputContentBox {
   padding: 10px;
 }
-#detailTaskA button {
+#detailTaskList button {
   border-radius: 50%;
-  border: none;
-  background: radial-gradient(circle, rgb(79, 79, 79) 40%, lightgray);
 }
-.btnCenter {
-  display: flex;
-  align-items: center;
-}
-#detailTask {
+.detailTask_InputBox {
   border-radius: 5px;
-  border: 1px solid white;
+  border: 2px solid lightgray;
   width: 50%;
   height: 30px;
   margin-right: 10px;
 }
-#inputContentFrame #inputContentArea #contentAddBtn {
-  background: radial-gradient(circle, rgb(79, 79, 79) 40%, lightgray);
-  margin: 5 0;
-  border-radius: 50%;
-  border: none;
-}
-#addTaskScreen #addTaskbtnAF {
+
+#taskScreen #addTaskbtnAF {
   height: 10%;
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-#addTaskScreen #addTaskbtnAF button {
+#addTaskbtnAF div {
+  height: 80%;
+  width: 100%;
+}
+#addTaskbtnAF div div {
+  display: flex;
+  justify-content: space-between;
+}
+#addTaskbtnAF button {
   min-width: 41px;
   width: 20%;
-  min-height: 27px;
-  height: 60%;
+  height: 100%;
 }
 @media only screen and (max-width: 554px) {
-  #addTaskScreen #addTaskbtnAF button {
+  #addTaskbtnAF button {
     font-size: 10px;
   }
 }
 @media only screen and (min-width: 555px) and (max-width: 655px) {
-  #addTaskScreen #addTaskbtnAF button {
+  #addTaskbtnAF button {
     font-size: 12px;
   }
 }
 @media only screen and (min-width: 656px) and (max-width: 825px) {
-  #addTaskScreen #addTaskbtnAF button {
+  #addTaskbtnAF button {
     font-size: 15px;
   }
 }
-#inputTitleFrame {
+#taskTitleContainer {
   height: 15%;
   width: 100%;
   padding: 10px;
   margin-bottom: 10px;
 }
-
 #taskTitleBox {
   font-size: 25px;
   overflow: hidden;
 }
-#detailTaskA div {
+#detailTaskList div {
   font-size: 20px;
 }
 .checkBox {
   width: 15px;
   height: 15px;
-}
-#fullDiv {
-  position: relative;
-  width: 100%;
-  height: 100%;
 }
 #characterContainer {
   position: absolute;
@@ -242,9 +245,6 @@ button {
   width: 150px;
   height: fit-content;
   transform: translateX(0);
-  display: flex;
-  flex-direction: column-reverse;
-  align-items: center;
 }
 #character {
   width: 50px;
@@ -254,20 +254,16 @@ button {
   width: 50px;
   height: 50px;
 }
-.lineBoxContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+
+#speechBubbleBox div {
+  background-color: lightgray;
 }
 #tail {
-  background-color: lightgray;
   width: 10px;
   height: 10px;
   clip-path: polygon(0 0, 100% 0, 50% 100%);
 }
-#lineBox {
-  background-color: lightgray;
-  border: none;
+#speechBubble {
   border-radius: 7px;
   padding: 2px;
 }
@@ -281,14 +277,10 @@ button {
   height: 100%;
   background-color: white;
   overflow: hidden;
+  padding: 10px;
 }
 .menubarButton {
   margin-bottom: 10px;
-}
-.characterCenter {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 #characterFrame {
   width: 100%;
@@ -302,12 +294,11 @@ button {
   right: 10px;
 }
 #characterArea {
+  display: flex;
+  justify-content: center;
   position: relative;
   width: 100%;
   height: 85%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 #imgContainer {
   position: absolute;
@@ -346,35 +337,18 @@ button {
 }
 #levelArea {
   height: 15%;
-  display: flex;
-  align-items: center;
 }
 .levelText {
   padding-left: 10px;
   font-size: 40px;
 }
-/* 지금까지 한 일 화면 */
-.popScreenSetting {
-  position: absolute;
-  z-index: 100;
-  left: 5%;
-  top: 10%;
-  width: 90%;
-  height: 80%;
-  background-color: white;
-  border: 1px solid white;
-  box-sizing: border-box;
-  box-shadow: 3px 3px 3px 2px black;
-  padding: 10px;
-  margin: 0px;
-}
-#clearTaskFrame {
+#clearTaskList {
   width: 100%;
   height: 100%;
   padding: 20px;
   overflow: auto;
 }
-#clearTaskFrame button {
+#clearTaskList button {
   height: 10%;
   width: 100%;
   display: flex;
@@ -393,9 +367,6 @@ button {
   width: 100%;
   height: 7%;
   margin-bottom: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 #selectClearTaskDetailTasks {
   border-radius: 10px;
@@ -437,18 +408,17 @@ button {
   height: 80%;
 }
 #loadScreenBox {
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 #loadTaskList {
+  width: 100%;
   height: 90%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-}
-.select {
-  border: 2px solid red;
 }
