@@ -450,6 +450,9 @@ function closeCharacterScreen() {
 }
 function showClearTasks() {
   menuBarOnOff(-1);
+  if (JSON.parse(localStorage.getItem("clearTasks")) == null) {
+    localStorage.setItem("clearTasks", JSON.stringify([]));
+  }
   preventScreen.classList.remove("hide");
   clearTaskScreen.classList.remove("hide");
   clearTaskArr = JSON.parse(localStorage.getItem("clearTasks"));
@@ -457,7 +460,6 @@ function showClearTasks() {
   newTempBundle.id = "tempBundle";
   for (let i = 0; i < clearTaskArr.length; i++) {
     const newButton = document.createElement("button");
-    console.log(clearTaskArr.length);
     newButton.innerText = clearTaskArr[i].taskTitleBox;
     newButton.classList.add("taskTitleBtn");
     newButton.addEventListener("click", () => {
