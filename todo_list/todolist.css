@@ -99,7 +99,6 @@ button {
   font-style: italic;
   font-weight: bold;
 }
-/* topbanner 버튼 크기 설정 필요 */
 #menuBtn {
   background-image: url(./img/blackMenu.png);
   background-size: cover;

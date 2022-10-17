@@ -10,6 +10,7 @@ const input_detailTask = document.getElementById("input_detailTask");
 const detailTaskList = document.getElementById("detailTaskList");
 const addDetailTaskArea = document.getElementById("addDetailTaskArea");
 const characterContainer = document.getElementById("characterContainer");
+
 const preventScreen = document.getElementById("preventScreen");
 const menuBar = document.getElementById("menuBar");
 const characterScreen = document.getElementById("characterScreen");
@@ -54,31 +55,87 @@ let clearTaskArr = [];
 let seletctLoadTask = "";
 let nowTaskIdx = 0;
 let tempDetailTask = [];
-let autoMoving;
-let autoSpeak;
-let moving = [];
-let startPos = 0;
-let endPos = 0;
-let checkAutoSpeak = 0;
 let mycharacter = [];
-class characterState {
+class characterClass {
   constructor() {
     this.name = "무지개곰";
     this.level = 1;
     this.exp = 0;
     this.maxExp = 3;
+    this.script = [
+      `오늘은\n${nowMonth}월${nowDay}일입니다.`,
+      "★이몸 등장★",
+      "안녕",
+      "안녕하세요.",
+      "아~\n하기싫다~",
+      "오늘 점심\n뭐 먹지?",
+    ];
+    this.checkAutoSpeak = 0;
+    this.moveingTerm = 2;
+    this.startPos = 0;
+    this.endPos = 0;
+  }
+  speak() {
+    setInterval(() => {
+      this.checkAutoSpeak = 0;
+      speechBubbleContainer.classList.remove("hide");
+      let num = parseInt(Math.random() * this.script.length - 1) + 1;
+      speechBubble.innerText = this.script[num];
+      this.speechBubbleHide();
+    }, 10000);
+  }
+  dateSpeak() {
+    speechBubbleContainer.classList.remove("hide");
+    speechBubble.innerText = this.script[0];
+    this.speechBubbleHide();
+  }
+  speechBubbleHide() {
+    setTimeout(() => {
+      speechBubbleContainer.classList.add("hide");
+    }, 3000);
+  }
+  autoMoving() {
+    setInterval(() => {
+      this.endPos = this.startPos + parseInt(Math.random() * 501) - 250;
+      if (this.endPos < -20) {
+        this.endPos *= -1;
+      } else if (this.endPos > mainScreen.offsetWidth - 150) {
+        this.endPos = mainScreen.offsetWidth - 150;
+      }
+      if (this.startPos < this.endPos) {
+        mainCharaterImg.src = "./img/characterImgRight.png";
+      } else if (this.startPos > this.endPos) {
+        mainCharaterImg.src = "./img/characterImg.png";
+      }
+      characterContainer.animate(
+        {
+          transform: [
+            `translateX(${this.startPos}px)`,
+            `translateX(${this.endPos}px)`,
+          ],
+        },
+        {
+          duration: 1000,
+          fill: "forwards",
+          easing: "ease",
+        }
+      );
+      this.startPos = this.endPos;
+    }, this.moveingTerm * 1000);
   }
 }
-mycharacter.push(new characterState());
-let characterLine = [
-  `오늘은\n${nowMonth}월${nowDay}일입니다.`,
-  "★이몸 등장★",
-  "안녕",
-  "안녕하세요.",
-  "아~\n하기싫다~",
-  "오늘 점심\n뭐 먹지?",
-];
-// class와 배열 이용
+mycharacter.push(new characterClass());
+mycharacter[0].autoMoving();
+const character = document.getElementById("character");
+let speakStart = mycharacter[0].speak();
+character.onclick = () => {
+  if (mycharacter[0].checkAutoSpeak == 0) {
+    mycharacter[0].checkAutoSpeak = 1;
+    clearInterval(speakStart);
+    mycharacter[0].dateSpeak();
+    speakStart;
+  }
+};
 function addTask() {
   input_TaskTitleBox.value = "";
   taskArr.push(new Task());
@@ -114,7 +171,6 @@ function makeTaskList(arr, idx, what) {
   const newProgress = document.createElement("progress");
   const newSpan = document.createElement("span");
   newProgress.id = `taskProgress_${idx}`;
-
   newBtn.id = `taskTitleID_${idx}`;
   newBtn.style.boxShadow = "2px 2px 2px 2px gray";
   newBtn.appendChild(newSpan);
@@ -289,16 +345,12 @@ function modifyTask() {
 }
 function clearTask() {
   clearTaskArr.push(taskArr[nowTaskIdx]);
+  localStorage.setItem("clearTasks", JSON.stringify(clearTaskArr));
   document.getElementById(`taskTitleID_${nowTaskIdx}`).remove();
   taskScreen.classList.add("hide");
   preventScreen.classList.add("hide");
   detailTaskList.firstElementChild.remove();
   taskArr[nowTaskIdx] = "";
-  taskArr = taskArr.filter((item) => {
-    if (item != "") {
-      return item;
-    }
-  });
   mycharacter[0].exp++;
   if (mycharacter[0].exp == mycharacter[0].maxExp) {
     mycharacter[0].exp = 0;
@@ -312,11 +364,6 @@ function giveupTask() {
   taskModifyBtnArea.classList.add("hide");
   detailTaskList.firstElementChild.remove();
   taskArr[nowTaskIdx] = "";
-  // taskArr = taskArr.filter((item) => {
-  //   if (item != "") {
-  //     return item;
-  //   }
-  // });
   checkModify = 0;
 }
 function cancleModify() {
@@ -373,63 +420,6 @@ function finishModify() {
     checkModify = 0;
   }
 }
-function moveCharacter(moveLength) {
-  moveDirection = parseInt(Math.random() * 2) - 1;
-  endPos = startPos + moveDirection * moveLength * 20;
-  if (endPos < -20) {
-    endPos *= -1;
-  } else if (endPos > mainScreen.offsetWidth - 100) {
-    endPos = mainScreen.offsetWidth - 100;
-  }
-  if (startPos < endPos) {
-    mainCharaterImg.src = "./img/characterImgRight.png";
-  } else if (startPos > endPos) {
-    mainCharaterImg.src = "./img/characterImg.png";
-  }
-  characterContainer.animate(
-    {
-      transform: [`translateX(${startPos}px)`, `translateX(${endPos}px)`],
-    },
-    {
-      duration: 1000,
-      fill: "forwards",
-      easing: "ease",
-    }
-  );
-  startPos = endPos;
-}
-function lineBoxHide() {
-  speechBubble.innerText = "";
-  speechBubbleContainer.classList.toggle("hide");
-}
-autoMoving = setInterval(() => {
-  moveLength = parseInt(Math.random() * 3 + 1);
-  moveCharacter(moveLength);
-}, moveTerm);
-function speak(num) {
-  speechBubbleContainer.classList.remove("hide");
-  speechBubble.innerText = characterLine[num];
-  setTimeout(() => {
-    lineBoxHide();
-  }, 3000);
-}
-function autoSpeakfunc() {
-  let num = parseInt(Math.random() * (characterLine.length - 1) + 1);
-  speak(num);
-}
-autoSpeak = setInterval(() => autoSpeakfunc(), 8000);
-function speakNowDate() {
-  clearInterval(autoSpeak);
-  speechBubbleContainer.classList.remove("hide");
-  speechBubble.innerText = characterLine[0];
-  if (checkAutoSpeak == 0) {
-    checkAutoSpeak++;
-    setTimeout(() => {
-      autoSpeak = setInterval(() => autoSpeakfunc(), 8000);
-      checkAutoSpeak--;
-    }, 3000);
-  }
-}
 function menuBarOnOff(n) {
   preventScreen.classList.toggle("hide");
   menuBar.animate(
@@ -462,10 +452,12 @@ function showClearTasks() {
   menuBarOnOff(-1);
   preventScreen.classList.remove("hide");
   clearTaskScreen.classList.remove("hide");
+  clearTaskArr = JSON.parse(localStorage.getItem("clearTasks"));
   const newTempBundle = document.createElement("div");
   newTempBundle.id = "tempBundle";
   for (let i = 0; i < clearTaskArr.length; i++) {
     const newButton = document.createElement("button");
+    console.log(clearTaskArr.length);
     newButton.innerText = clearTaskArr[i].taskTitleBox;
     newButton.classList.add("taskTitleBtn");
     newButton.addEventListener("click", () => {
@@ -494,9 +486,13 @@ function closeSelectClearTaskScreen() {
 }
 const saveBtn = document.getElementById("saveBtn");
 saveBtn.onclick = () => {
-  menuBarOnOff(-1);
-  preventScreen.classList.remove("hide");
-  saveScreenFrame.classList.remove("hide");
+  if (taskListArea.childElementCount == 0) {
+    alert("저장할 일이 없습니다.");
+  } else {
+    menuBarOnOff(-1);
+    preventScreen.classList.remove("hide");
+    saveScreenFrame.classList.remove("hide");
+  }
 };
 const loadBtn = document.getElementById("loadBtn");
 loadBtn.onclick = function test() {
@@ -506,36 +502,39 @@ loadBtn.onclick = function test() {
   const newDiv = document.createElement("div");
   newDiv.style.height = "100%";
   newDiv.style.width = "100%";
-  let tempArr = localStorage.getItem("saveTaskList");
-  saveTaskList = JSON.parse(tempArr);
-  let checkNum = 0;
-  saveTaskList.forEach((item) => {
-    const newBtn = document.createElement("button");
-    const newSpan = document.createElement("span");
-    const deleteBtn = document.createElement("button");
-    deleteBtn.innerText = "제거";
-    deleteBtn.id = `deleteBtnID_${checkNum}`;
-    deleteBtn.onclick = () => {
-      console.log(saveTaskList[deleteBtn.id.slice(12)]);
-      saveTaskList = saveTaskList.filter((item) => {
-        if (item != "") {
-          return item;
-        }
-      });
-      deleteBtn.parentElement.remove();
-      localStorage.setItem("saveTaskList", JSON.stringify(saveTaskList));
-    };
-    newSpan.innerText = item;
-    newBtn.classList.add("taskTitleBtn");
-    newBtn.append(newSpan);
-    newBtn.append(deleteBtn);
-    newBtn.onclick = () => {
-      newBtn.classList.toggle("select");
-      seletctLoadTask = newSpan.innerText;
-    };
-    newDiv.append(newBtn);
-    checkNum++;
-  });
+  if (localStorage.getItem("saveTaskList") != null) {
+    let tempArr = localStorage.getItem("saveTaskList");
+    saveTaskList = JSON.parse(tempArr);
+    let checkNum = 0;
+    saveTaskList.forEach((item) => {
+      const newBtn = document.createElement("button");
+      const newSpan = document.createElement("span");
+      const deleteBtn = document.createElement("button");
+      deleteBtn.innerText = "제거";
+      deleteBtn.id = `deleteBtnID_${checkNum}`;
+      deleteBtn.onclick = () => {
+        localStorage.removeItem(saveTaskList[deleteBtn.id.slice(12)]);
+        saveTaskList[deleteBtn.id.slice(12)] = "";
+        saveTaskList = saveTaskList.filter((item) => {
+          if (item != "") {
+            return item;
+          }
+        });
+        deleteBtn.parentElement.remove();
+        localStorage.setItem("saveTaskList", JSON.stringify(saveTaskList));
+      };
+      newSpan.innerText = item;
+      newBtn.classList.add("taskTitleBtn");
+      newBtn.append(newSpan);
+      newBtn.append(deleteBtn);
+      newBtn.onclick = () => {
+        newBtn.classList.toggle("select");
+        seletctLoadTask = newSpan.innerText;
+      };
+      newDiv.append(newBtn);
+      checkNum++;
+    });
+  }
   loadTaskList.append(newDiv);
 };
 const saveCancleBtn = document.getElementById("saveCancleBtn");
@@ -546,8 +545,17 @@ saveCancleBtn.onclick = () => {
 };
 const saveCompleteBtn = document.getElementById("saveCompleteBtn");
 saveCompleteBtn.onclick = () => {
+  if (JSON.parse(localStorage.getItem("saveTaskList") == null)) {
+    localStorage.setItem("saveTaskList", JSON.stringify([]));
+  }
   if (saveTitle.value == "") {
     alert("저장할 이름을 작성해주세요.");
+  } else if (
+    JSON.parse(localStorage.getItem("saveTaskList")).find((item) => {
+      return item == saveTitle.value;
+    })
+  ) {
+    alert("동일한 이름을 가진 할 일이 저장되어 있습니다.");
   } else {
     preventScreen.classList.add("hide");
     saveScreenFrame.classList.add("hide");
@@ -556,6 +564,7 @@ saveCompleteBtn.onclick = () => {
         return item;
       }
     });
+    saveTaskList = JSON.parse(localStorage.getItem("saveTaskList"));
     saveTaskList.push(saveTitle.value);
     localStorage.setItem("saveTaskList", JSON.stringify(saveTaskList));
     localStorage.setItem(saveTitle.value, JSON.stringify(taskArr));
