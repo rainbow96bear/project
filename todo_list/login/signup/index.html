@@ -1,0 +1,35 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="index.css" />
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  </head>
+  <body>
+    <div id="root">
+      <div id="signupBox">
+        <form action="">
+          <div id="inputBox">
+            <input id="nameInput" type="text" placeholder="이름" />
+            <div class="checkOverLap">
+              <input id="emailInput" type="email" placeholder="이메일" />
+              <button id="checkEmail">중복확인</button>
+            </div>
+            <div class="checkOverLap">
+              <input id="idInput" type="text" placeholder="아이디" />
+              <button id="checkId">중복확인</button>
+            </div>
+            <input id="pwInput" type="password" placeholder="비밀번호" />
+          </div>
+          <div id="buttonBox">
+            <button id="cancleBtn">가입 취소</button>
+            <button id="completeBtn">가입 완료</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <script src="index.js"></script>
+  </body>
+</html>
