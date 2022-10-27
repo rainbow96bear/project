@@ -1,0 +1,40 @@
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Log in</title>
+    <link rel="stylesheet" href="index.css" />
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  </head>
+  <body>
+    <div id="loginContainer">
+      <div id="loginBox">
+        <form id="signUpFrom">
+          <div id="signUpinputBox">
+            <label for="">
+              <input id="nameInput" type="text" placeholder="이름" />
+            </label>
+            <label for="">
+              <input id="birthInput" type="text" placeholder="생년월일" />
+            </label>
+            <label for="">
+              <input id="newIdInput" type="text" placeholder="아이디" />
+            </label>
+            <label for="">
+              <input
+                id="newPasswordInput"
+                type="password"
+                placeholder="비밀번호" />
+            </label>
+          </div>
+          <div id="signUpBtnBox">
+            <button id="signUpCancleBtn">취소</button>
+            <button id="signUpFinishBtn">완료</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <script src="index.js"></script>
+  </body>
+</html>
