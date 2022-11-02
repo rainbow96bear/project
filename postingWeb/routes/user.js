@@ -2,17 +2,31 @@ const router = require("express").Router();
 const fs = require("fs");
 const crypto = require("crypto-js");
 const jwt = require("jsonwebtoken");
+const { UserInfo } = require("../models/index.js");
 
 let userInfo = [];
 let idpw = {};
-router.post("/login", (req, res) => {
-  if (fs.existsSync(`idpw.json`)) {
-    idpw = JSON.parse(fs.readFileSync(`idpw.json`, "utf-8"));
-  } else {
-    fs.writeFileSync(`./idpw.json`, "", () => {});
-  }
-  if (idpw[req.body.id]) {
-    if (idpw[req.body.id] == crypto.SHA256(req.body.pw).toString()) {
+router.post("/signup", async (req, res) => {
+  try {
+    if (await UserInfo.findOne({ where: { userId: req.body.id } })) {
+      res.send({ status: 400 });
+    } else {
+      await UserInfo.create({
+        name: req.body.name,
+        birth: req.body.birth,
+        userId: req.body.id,
+        pw: crypto.SHA256(req.body.pw).toString(),
+      });
+      res.send({ status: 200 });
+    }
+  } catch (err) {}
+});
+router.post("/login", async (req, res) => {
+  const tempUserInfo = await UserInfo.findOne({
+    where: { userId: req.body.id },
+  });
+  if (tempUserInfo) {
+    if (tempUserInfo.pw == crypto.SHA256(req.body.pw).toString()) {
       const accessToken = jwt.sign(
         { id: req.body.id, pw: idpw[req.body.id] },
         process.env.ACCESSTOKEN_SECRET,
@@ -33,47 +47,13 @@ router.post("/login", (req, res) => {
     res.send({ status: 401 });
   }
 });
-router.post("/signup", (req, res) => {
-  if (fs.existsSync(`userInfo.json`)) {
-    userInfo = JSON.parse(fs.readFileSync(`userInfo.json`, "utf-8"));
-  } else {
-    fs.writeFileSync(`./userInfo.json`, "", () => {});
-  }
-  if (fs.existsSync(`idpw.json`)) {
-    idpw = JSON.parse(fs.readFileSync(`idpw.json`, "utf-8"));
-  } else {
-    fs.writeFileSync(`./idpw.json`, "", () => {});
-  }
-  try {
-    if (!idpw[req.body.id]) {
-      idpw[req.body.id] = crypto.SHA256(req.body.pw).toString();
-      userInfo.push({
-        name: req.body.name,
-        birth: req.body.birth,
-        id: req.body.id,
-        pw: crypto.SHA256(req.body.pw).toString(),
-      });
-      fs.writeFileSync("./userInfo.json", JSON.stringify(userInfo), () => {
-        console.log("아이디 비밀번호 저장완료");
-      });
-      fs.writeFileSync("./idpw.json", JSON.stringify(idpw), () => {
-        console.log("아이디 비밀번호 저장완료");
-      });
-      res.send({ status: 200 });
-    } else {
-      res.send({ status: 400 });
-    }
-  } catch (err) {
-    // console.log(err);
-  }
-});
 router.post("/checkToken", (req, res) => {
   if (req.cookies["accessCookie"]) {
     const tempObj = jwt.verify(
       req.cookies["accessCookie"],
       process.env.ACCESSTOKEN_SECRET
     );
-    if (idpw[tempObj.id] == tempObj.pw) {
+    if (UserInfo.findOne({ where: { userId: tempObj.id } }).pw == tempObj.pw) {
       res.send({ status: 200, id: tempObj.id });
     }
   } else {

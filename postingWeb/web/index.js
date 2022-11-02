@@ -43,6 +43,9 @@ document.getElementById("logout_btn").onclick = async function () {
 document.getElementById("addPost_btn").onclick = async function () {
   location.href = "./writepost";
 };
+document.getElementById("cheating_btn").onclick = async function () {
+  location.href = "./cheating";
+};
 
 async function getPost() {
   const data = await axios.post("/api/board/getPost", {});
@@ -70,7 +73,6 @@ async function getPost() {
     document.getElementById("post_box").append(tempDiv);
   });
 }
-window.addEventListener("focus", getPost(), false);
 
 async function checkToken() {
   const data = await axios.post("/api/user/checkToken", {});
@@ -88,4 +90,8 @@ async function checkToken() {
       break;
   }
 }
-checkToken();
+window.addEventListener("focus", checkToken(), false);
+
+window.onpageshow = async function (event) {
+  await getPost();
+};

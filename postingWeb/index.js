@@ -8,6 +8,9 @@ const dotenv = require("dotenv");
 const routes = require("./routes/index.js");
 const signup = require("./routes/user.js");
 const writepost = require("./routes/board.js");
+const cheating = require("./routes/cheat.js");
+const socket = require("./web/cheating/socket.js");
+const { sequelize } = require("./models/index.js");
 
 dotenv.config();
 
@@ -41,7 +44,17 @@ app.use(
 app.use("/api", routes);
 app.use("/signup", signup);
 app.use("/writepost", writepost);
+app.use("/cheating", cheating);
+sequelize
+  .sync({ force: false })
+  .then(() => {
+    console.log("db connected");
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
-app.listen(app.get("port"), () => {
+const server = app.listen(app.get("port"), () => {
   console.log("포스팅서버오픈");
 });
+socket(server);

@@ -3,7 +3,7 @@ const fs = require("fs");
 const jwt = require("jsonwebtoken");
 let postArr = [];
 
-router.post("/addPost", (req, res) => {
+router.post("/addPost", async (req, res) => {
   const time = new Date();
   if (req.cookies["accessCookie"]) {
     postArr.push({
@@ -22,9 +22,9 @@ router.post("/addPost", (req, res) => {
     res.send({ status: 400 });
   }
 });
-router.post("/getPost", (req, res) => {
+router.post("/getPost", async (req, res) => {
   if (fs.existsSync(`postArr.json`)) {
-    postArr = JSON.parse(fs.readFileSync(`postArr.json`, "utf-8"));
+    postArr = await JSON.parse(fs.readFileSync(`postArr.json`, "utf-8"));
   } else {
     fs.writeFileSync(`./postArr.json`, "", () => {});
   }
