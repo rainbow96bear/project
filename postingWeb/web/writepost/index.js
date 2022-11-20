@@ -23,10 +23,10 @@ document.getElementById("completeBtn").onclick = async function () {
   switch (data.data.status) {
     case 200:
       alert("글 등록 완료");
-      history.go(-1);
+      window.location.assign("http://localhost:8080/");
       break;
     case 400:
       alert("로그인 시간이 만료되셨습니다.\n다시 로그인 해주세요.");
-      history.go(-1);
+      window.location.assign("http://localhost:8080/");
   }
 };

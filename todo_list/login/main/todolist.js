@@ -488,3 +488,8 @@ setInterval(() => {
   });
   localStorage.setItem("lastTasks", JSON.stringify(tempArr));
 }, 100);
+
+document.getElementById("testBtn").onclick = async function () {
+  const data = await axios.post("/api/user/test", {});
+  console.log(data.data);
+};

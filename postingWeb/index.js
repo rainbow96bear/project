@@ -45,6 +45,7 @@ app.use("/api", routes);
 app.use("/signup", signup);
 app.use("/writepost", writepost);
 app.use("/cheating", cheating);
+
 sequelize
   .sync({ force: false })
   .then(() => {

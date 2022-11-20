@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const crypto = require("crypto-js");
+const jwt = require("jsonwebtoken");
 
 const fs = require("fs");
 function makeDB(fileName) {
@@ -25,7 +26,22 @@ router.post("/login", (req, res) => {
   loadLoginDB("login");
   loadUserInfoDB("userInfo");
   if (login[req.body.id]) {
-    if (login[req.body.id] == req.body.pw) {
+    if (login[req.body.id] == crypto.SHA256(req.body.pw).toString()) {
+      const accessToken = jwt.sign({ id: req.body.id }, "rainbowbear", {
+        algorithm: "HS256",
+        issuer: "rainbowbear",
+      });
+      const refreshToken = jwt.sign({ id: req.body.id }, "rainbowbear", {
+        algorithm: "HS256",
+        issuer: "rainbowbear",
+      });
+      res.cookie("accessCookie", accessToken, {
+        expires: new Date(Date.now() + 60 * 1000),
+      });
+
+      res.cookie("refreshCookie", refreshToken, {
+        expires: new Date(Date.now() + 10 * 60 * 1000),
+      });
       res.send({ status: 200 });
     } else {
       res.send({ status: 400 });
@@ -56,15 +72,24 @@ router.post("/signUp", (req, res) => {
   makeDB("userInfo");
   loadLoginDB("login");
   loadUserInfoDB("userInfo");
-  login[req.body.id] = req.body.pw;
+  login[req.body.id] = crypto.SHA256(req.body.pw).toString();
   userInfo[req.body.email] = {
     name: req.body.name,
     id: req.body.id,
-    pw: req.body.pw,
+    pw: crypto.SHA256(req.body.pw).toString(),
   };
   fs.writeFile("./login.json", JSON.stringify(login), () => {});
   fs.writeFile("./userInfo.json", JSON.stringify(userInfo), () => {});
 
   res.send({ status: 200 });
 });
+
+router.post("/test", (req, res) => {
+  const token = req.cookies.accessCookie;
+  console.log(token);
+  const data = jwt.verify(token, "rainbowbear").id;
+  console.log(data);
+  res.send({ id: data });
+});
+
 module.exports = router;

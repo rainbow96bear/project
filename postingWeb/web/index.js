@@ -33,12 +33,15 @@ document.getElementById("signup_btn").onclick = async function () {
     "pw_input"
   ).value = "";
 };
-
+var deleteCookie = function (name) {
+  document.cookie = name + "=; expires=Thu, 01 Jan 1999 00:00:10 GMT;";
+};
 document.getElementById("logout_btn").onclick = async function () {
   document.getElementById("login_id_span").innerText = "";
   document.getElementById("sign_box").classList.remove("hide");
   document.getElementById("signout_box").classList.add("hide");
   document.getElementById("addPost_box").classList.add("hide");
+  deleteCookie("accessCookie");
 };
 document.getElementById("addPost_btn").onclick = async function () {
   location.href = "./writepost";
@@ -52,7 +55,7 @@ async function getPost() {
   document.getElementById("post_box").innerHTML = "";
 
   let check = 0;
-  data.data.data.forEach((item) => {
+  await data.data.data.forEach((item) => {
     const tempDiv = document.createElement("div");
     const tempTitle = document.createElement("div");
     const tempWriter = document.createElement("div");
@@ -60,7 +63,7 @@ async function getPost() {
 
     tempTitle.innerText = item.title;
     tempTitle.classList.add("titleDiv");
-    tempWriter.innerText = item.id;
+    tempWriter.innerText = item.uploader;
     tempWriter.classList.add("info");
     tempDate.innerText = item.uptime;
     tempDate.classList.add("info");
@@ -92,6 +95,4 @@ async function checkToken() {
 }
 window.addEventListener("focus", checkToken(), false);
 
-window.onpageshow = async function (event) {
-  await getPost();
-};
+window.addEventListener("focus", getPost(), false);

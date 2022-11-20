@@ -1,5 +1,6 @@
 document.getElementById("loginBtn").onclick = async function (e) {
   e.preventDefault();
+
   const data = await axios.post("/api/user/login", {
     id: document.getElementById("idInput").value,
     pw: document.getElementById("pwInput").value,
