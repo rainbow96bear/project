@@ -1,46 +1,42 @@
 import "./App.css";
 import React from "react";
-import { useEffect, useState } from "react";
-import Header from "./components/Header";
+import { useEffect, useState, createContext } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Main from "./components/Main";
-import SignUp from "./components/SignUp";
-import Board from "./components/Board";
-import AddPost from "./components/AddPost";
+import BlogHeader from "./components/BlogHeader";
+import MainIndex from "./components/main";
+import ManageIndex from "./components/manage";
+
+export const PostInfo = createContext();
 
 function App() {
-  const [userArr, setUserArr] = useState([]);
-  const [loginUserID, setLoginUserID] = useState("");
-  const [post, setPost] = useState([]);
-
+  const [postArr, setPostArr] = useState([]);
+  const [categoryArr, setCategoryArr] = useState([
+    "카테고리 없음",
+    "java",
+    "solidity",
+    "javascript",
+  ]);
   return (
     <div className="App">
-      <BrowserRouter>
-        <Header
-          userArr={userArr}
-          setUserArr={setUserArr}
-          loginUserID={loginUserID}
-          setLoginUserID={setLoginUserID}></Header>
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <Main post={post} loginUserID={loginUserID}></Main>
-            }></Route>
-          <Route
-            path="/signup"
-            element={
-              <SignUp
-                userArr={userArr}
-                setUserArr={setUserArr}
-                loginUserID={loginUserID}></SignUp>
-            }></Route>
-          <Route path="/board" element={<Board post={post}></Board>}></Route>
-          <Route
-            path="/addpost"
-            element={<AddPost post={post} setPost={setPost}></AddPost>}></Route>
-        </Routes>
-      </BrowserRouter>
+      <PostInfo.Provider
+        value={{ postArr, setPostArr, categoryArr, setCategoryArr }}>
+        <BrowserRouter>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <>
+                  <BlogHeader></BlogHeader>
+                  <MainIndex></MainIndex>
+                </>
+              }></Route>
+
+            <Route
+              path="/manage/*"
+              element={<ManageIndex></ManageIndex>}></Route>
+          </Routes>
+        </BrowserRouter>
+      </PostInfo.Provider>
     </div>
   );
 }
