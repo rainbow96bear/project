@@ -41,8 +41,10 @@
     
 ## **3. React Native**
  * 11/23
-    * React Native 연습겸 ToDo list 어플 만들기 위하여 Router와 Prop 전달 연습
- * 앞으로 할 일 : 기본적인 UI만들기, 할 일 추가 및 완료 등 기본적인 기능구현, Async Storage를 통하여 할 일 저장
+    * React Native 연습겸 ToDo list 어플 만들기 위하여 Router와 Prop 전달 연습4
+ * 11/27
+    * 할 일을 추가하면 메인 화면에 할 일이 추가 되는 기능 구현
+ * 앞으로 할 일 : 기본적인 UI만들기, 할 일 완료 등 기본적인 기능구현, Async Storage를 통하여 할 일 저장
     
 ## **4. React - practiceproject**
  * 11/24
