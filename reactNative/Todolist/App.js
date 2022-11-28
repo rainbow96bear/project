@@ -13,6 +13,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Main from './components/Main';
 import AddTask from './components/AddTask';
+import TaskScreen from './components/TaskScreen';
 /* $FlowFixMe[missing-local-annot] The type annotation(s) required by Flow's
  * LTI update could not be added via codemod */
 
@@ -23,6 +24,7 @@ const App = () => {
       <Stack.Navigator>
         <Stack.Screen name="Main" component={Main} />
         <Stack.Screen name="AddTask" component={AddTask} />
+        <Stack.Screen name="TaskScreen" component={TaskScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

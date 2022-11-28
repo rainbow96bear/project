@@ -14,9 +14,19 @@ export default function Main({navigation, route}) {
     <View style={styles.base}>
       <ScrollView style={styles.taskBox}>
         {taskArr.map((item, index) => (
-          <Text style={styles.taskItem}>
-            {index + 1}. {item}
-          </Text>
+          <TouchableOpacity
+            key={`task-${index}`}
+            onPress={() =>
+              navigation.navigate('TaskScreen', {
+                taskArr,
+                index,
+                setTaskArr,
+              })
+            }>
+            <Text style={styles.taskItem}>
+              {index + 1}. {item}
+            </Text>
+          </TouchableOpacity>
         ))}
       </ScrollView>
       <TouchableOpacity

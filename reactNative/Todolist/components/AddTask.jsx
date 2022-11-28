@@ -10,11 +10,11 @@ import {
 
 export default function AddTask({navigation, route}) {
   const [task, setTask] = useState('');
-  function addTask(newTask) {
+  function addTask() {
     if (task === '') {
       alert('할 일을 입력해주세요.');
     } else {
-      route.params.setTaskArr([...route.params.taskArr, newTask]);
+      route.params.setTaskArr([...route.params.taskArr, task]);
       navigation.goBack();
     }
   }
@@ -37,7 +37,7 @@ export default function AddTask({navigation, route}) {
         <TouchableOpacity style={styles.btnStyle} onPress={() => cancleAdd()}>
           <Text>취소</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.btnStyle} onPress={() => addTask(task)}>
+        <TouchableOpacity style={styles.btnStyle} onPress={() => addTask()}>
           <Text>할 일 추가</Text>
         </TouchableOpacity>
       </View>
