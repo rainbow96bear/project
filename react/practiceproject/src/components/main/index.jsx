@@ -1,22 +1,42 @@
+import { Route, Routes } from "react-router-dom";
 import styled from "styled-components";
-import BlogSideBar from "./BlogSideBar";
-import MainPostScreen from "./MainPostScreen";
 
-export default function MainIndex() {
+import BlogHeader from "./BlogHeader";
+import BlogSideBar from "./BlogSideBar";
+import MainPostScreenContainer from "./mainPostScreen/MainPostScreenContainer";
+
+export default function MainIndex({ post }) {
   return (
     <MainBox>
-      <div>
+      <BlogHeader></BlogHeader>
+      <div className="mainBox">
         <BlogSideBar className="blogSideBar"></BlogSideBar>
-        <MainPostScreen></MainPostScreen>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <MainPostScreenContainer></MainPostScreenContainer>
+            }></Route>
+          {post.map((item, index) => (
+            <Route
+              key={`mainPost-${index}`}
+              path={item.title}
+              element={<div>item.title</div>}></Route>
+          ))}
+        </Routes>
       </div>
     </MainBox>
   );
 }
 const MainBox = styled.div`
-  width: 100vw;
   display: flex;
   justify-content: center;
-  div {
+  align-items: center;
+  flex-direction: column;
+  & .mainBox {
     width: 70%;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
   }
 `;

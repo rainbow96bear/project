@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export default function BlogHeader() {
@@ -7,14 +8,16 @@ export default function BlogHeader() {
         <div className="blogTitle">무지개곰의 블로그</div>
         <div>
           <input type="text"></input>
-          <div>이미지 파비콘</div>
+          <Link to="manage/newpost">
+            <div>이미지 파비콘</div>
+          </Link>
         </div>
       </TopBanner>
     </BlogHeadBox>
   );
 }
 const BlogHeadBox = styled.div`
-  width: 100vw;
+  width: 100%;
   height: 100px;
   display: flex;
   justify-content: center;

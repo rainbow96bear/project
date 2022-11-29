@@ -1,17 +1,37 @@
 import styled from "styled-components";
-import { useContext } from "react";
-import { PostInfo } from "../../App";
+import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-export default function NewPost() {
-  const { postArr, setPostArr, categoryArr } = useContext(PostInfo);
+export default function NewPost({ post, upload }) {
+  const categoryArr = ["자바", "자바스크립트"];
+  const [newPost, setNewPost] = useState({
+    title: "",
+    content: "",
+    category: "",
+  });
+  const navigate = useNavigate();
+  function test() {
+    if (newPost.title === "" || newPost.content === "") {
+      alert("모두 입력해주세요");
+    } else {
+      upload(newPost);
+      navigate(-1);
+    }
+  }
   return (
     <NewPostBox>
-      <TopBanner></TopBanner>
+      <Header>
+        <div>다양한 기능이 올 자리</div>
+      </Header>
       <MainPostingBox>
         <div>
           <form action="">
             <div className="formStyle">
-              <select placeholder="카테고리">
+              <select
+                placeholder="카테고리"
+                onChange={(e) => {
+                  setNewPost({ ...post, category: e.target.value });
+                }}>
                 {categoryArr.map((item, index) => (
                   <option value={item} key={`categoryOption-${index}`}>
                     {item}
@@ -23,10 +43,18 @@ export default function NewPost() {
                 type="text"
                 name=""
                 id=""
+                value={newPost.title || ""}
+                onInput={(e) => {
+                  setNewPost({ ...newPost, title: e.target.value });
+                }}
                 placeholder="제목을 입력하세요"
               />
               <textarea
                 className="context"
+                value={newPost.content || ""}
+                onInput={(e) => {
+                  setNewPost({ ...newPost, content: e.target.value });
+                }}
                 placeholder="내용을 입력하세요"></textarea>
             </div>
           </form>
@@ -37,7 +65,9 @@ export default function NewPost() {
           <div className="tempSave">
             임시저장 | <span>0</span>
           </div>
-          <div className="uploadBtn">완료</div>
+          <div className="uploadBtn" onClick={test}>
+            완료
+          </div>
         </div>
       </Footer>
     </NewPostBox>
@@ -46,11 +76,25 @@ export default function NewPost() {
 
 const NewPostBox = styled.div`
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 `;
-const TopBanner = styled.div``;
+const Header = styled.div`
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 50px;
+  div {
+    width: 68%;
+    background-color: lightgray;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+`;
 const MainPostingBox = styled.div`
-  width: 80%;
+  width: 68%;
 
   div {
     width: 100%;

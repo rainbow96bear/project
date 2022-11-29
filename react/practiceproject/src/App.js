@@ -1,42 +1,27 @@
 import "./App.css";
 import React from "react";
-import { useEffect, useState, createContext } from "react";
+import { useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import BlogHeader from "./components/BlogHeader";
+import { Provider } from "react-redux";
+
+import BlogHeader from "./components/main/BlogHeader";
 import MainIndex from "./components/main";
 import ManageIndex from "./components/manage";
-
-export const PostInfo = createContext();
+import store from "./store";
 
 function App() {
-  const [postArr, setPostArr] = useState([]);
-  const [categoryArr, setCategoryArr] = useState([
-    "카테고리 없음",
-    "java",
-    "solidity",
-    "javascript",
-  ]);
   return (
     <div className="App">
-      <PostInfo.Provider
-        value={{ postArr, setPostArr, categoryArr, setCategoryArr }}>
+      <Provider store={store}>
         <BrowserRouter>
           <Routes>
-            <Route
-              path="/"
-              element={
-                <>
-                  <BlogHeader></BlogHeader>
-                  <MainIndex></MainIndex>
-                </>
-              }></Route>
-
+            <Route path="/*" element={<MainIndex></MainIndex>}></Route>
             <Route
               path="/manage/*"
               element={<ManageIndex></ManageIndex>}></Route>
           </Routes>
         </BrowserRouter>
-      </PostInfo.Provider>
+      </Provider>
     </div>
   );
 }

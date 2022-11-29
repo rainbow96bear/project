@@ -1,14 +1,15 @@
 import { Routes, Route } from "react-router-dom";
 import styled from "styled-components";
-import Manage from "./Mange";
-import NewPost from "./NewPost";
-
+import Manage from "./manage/Mange";
+import NewPostContainer from "./newPost/NewPostContainer";
 export default function ManageIndex() {
   return (
     <ManageBox>
       <Routes>
         <Route path="/" element={<Manage></Manage>}></Route>
-        <Route path="/newpost" element={<NewPost></NewPost>}></Route>
+        <Route
+          path="/newpost"
+          element={<NewPostContainer></NewPostContainer>}></Route>
       </Routes>
     </ManageBox>
   );

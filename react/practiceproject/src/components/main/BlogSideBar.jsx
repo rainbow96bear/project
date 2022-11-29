@@ -5,7 +5,7 @@ export default function BlogSideBar() {
 }
 
 const MainSideBarBox = styled.div`
-  width: 10%;
+  width: 20%;
   max-width: 230px;
   height: 50px;
   border-bottom: 1px solid gray;
