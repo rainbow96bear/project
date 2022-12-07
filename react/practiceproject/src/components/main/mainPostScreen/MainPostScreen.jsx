@@ -1,41 +1,29 @@
-import { connect, useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-import { action } from "../../modules/nowPost";
-
-export default function MainPostScreen({ post }) {
-  console.log(post);
+export default function MainPostScreen({ post, selectPost }) {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  function moveToPost(item, index) {
+    navigate(`/${item.title}`);
+    selectPost(post[index]);
+  }
 
   return (
     <MainPostScreenBox>
       {post.map((item, index) => (
-        <Link
-          key={`mainPost-${index}`}
-          className="postBox"
-          to={item.title}
+        <div
           onClick={() => {
-            dispatch(action.selectPost(post[index]));
-          }}>
+            moveToPost(item, index);
+          }}
+          key={`mainPost-${index}`}
+          className="postBox">
           <span>{item.title}</span>
           <div className="contentStyle">{item.content}</div>
-        </Link>
+        </div>
       ))}
     </MainPostScreenBox>
   );
 }
-
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     selectPost: (nowPost) => {
-//       dispatch(action.selectPost(nowPost));
-//     },
-//   };
-// };
-
-// export default connect(mapDispatchToProps)(MainPostScreen);
 
 const MainPostScreenBox = styled.div`
   width: 80%;

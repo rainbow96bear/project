@@ -1,14 +1,13 @@
 import { useEffect } from "react";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
+import { useLocation, useParams } from "react-router-dom";
 import { action } from "../../modules/nowPost";
 
 import PostComponent from "./PostComponent";
 
-function PostContainer({ nowPost }) {
+export default function PostContainer() {
+  const nowPost = useSelector((state) => state.nowPost);
+  const { title } = useParams(useLocation());
+
   return <PostComponent nowPost={nowPost}></PostComponent>;
 }
-const mapStateToProps = (state) => {
-  return { nowPost: state.nowPost };
-};
-
-export default connect(mapStateToProps)(PostContainer);

@@ -8,14 +8,16 @@ export default function NewPost({ post, upload }) {
     title: "",
     content: "",
     category: "",
+    timeStamp: "",
   });
   const navigate = useNavigate();
-  function test() {
+  function uploadPost() {
     if (newPost.title === "" || newPost.content === "") {
       alert("모두 입력해주세요");
     } else {
-      upload(newPost);
-      navigate(-1);
+      const date = new Date().toLocaleString();
+      upload({ ...newPost, timeStamp: date });
+      navigate("/");
     }
   }
   return (
@@ -25,39 +27,37 @@ export default function NewPost({ post, upload }) {
       </Header>
       <MainPostingBox>
         <div>
-          <form action="">
-            <div className="formStyle">
-              <select
-                placeholder="카테고리"
-                onChange={(e) => {
-                  setNewPost({ ...post, category: e.target.value });
-                }}>
-                {categoryArr.map((item, index) => (
-                  <option value={item} key={`categoryOption-${index}`}>
-                    {item}
-                  </option>
-                ))}
-              </select>
-              <textarea
-                className="title"
-                type="text"
-                name=""
-                id=""
-                value={newPost.title || ""}
-                onInput={(e) => {
-                  setNewPost({ ...newPost, title: e.target.value });
-                }}
-                placeholder="제목을 입력하세요"
-              />
-              <textarea
-                className="context"
-                value={newPost.content || ""}
-                onInput={(e) => {
-                  setNewPost({ ...newPost, content: e.target.value });
-                }}
-                placeholder="내용을 입력하세요"></textarea>
-            </div>
-          </form>
+          <div className="formStyle">
+            <select
+              placeholder="카테고리"
+              onChange={(e) => {
+                setNewPost({ ...post, category: e.target.value });
+              }}>
+              {categoryArr.map((item, index) => (
+                <option value={item} key={`categoryOption-${index}`}>
+                  {item}
+                </option>
+              ))}
+            </select>
+            <textarea
+              className="title"
+              type="text"
+              name=""
+              id=""
+              value={newPost.title || ""}
+              onInput={(e) => {
+                setNewPost({ ...newPost, title: e.target.value });
+              }}
+              placeholder="제목을 입력하세요"
+            />
+            <textarea
+              className="context"
+              value={newPost.content || ""}
+              onInput={(e) => {
+                setNewPost({ ...newPost, content: e.target.value });
+              }}
+              placeholder="내용을 입력하세요"></textarea>
+          </div>
         </div>
       </MainPostingBox>
       <Footer>
@@ -65,7 +65,7 @@ export default function NewPost({ post, upload }) {
           <div className="tempSave">
             임시저장 | <span>0</span>
           </div>
-          <div className="uploadBtn" onClick={test}>
+          <div className="uploadBtn" onClick={uploadPost}>
             완료
           </div>
         </div>

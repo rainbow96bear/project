@@ -6,6 +6,7 @@ import { action } from "../../modules/post";
 function NewPostContainer({ post, upload }) {
   return <NewPost post={post} upload={upload}></NewPost>;
 }
+
 const mapStateToProps = (state, props) => {
   return { post: state.post, ...props };
 };

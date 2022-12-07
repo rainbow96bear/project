@@ -1,19 +1,14 @@
-import { useEffect } from "react";
 import { connect } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 import styled from "styled-components";
 
-import store from "../../store";
-import BlogHeader from "./BlogHeader";
+import BlogHeader from "./blogHeader/BlogHeader";
 import BlogSideBar from "./BlogSideBar";
 import MainPostScreenContainer from "./mainPostScreen/MainPostScreenContainer";
 import PostContainer from "./post/PostContainer.jsx";
 import PostTitleBox from "./postTitle/PostTitle";
 
 function MainIndex({ nowPost, post }) {
-  useEffect(() => {
-    console.log({ nowPost });
-  }, [nowPost]);
   return (
     <MainBox>
       <BlogHeader></BlogHeader>
@@ -33,12 +28,9 @@ function MainIndex({ nowPost, post }) {
             element={
               <MainPostScreenContainer></MainPostScreenContainer>
             }></Route>
-          {post.map((item, index) => (
-            <Route
-              key={`mainPost-${index}`}
-              path={item.title}
-              element={<PostContainer index={index}></PostContainer>}></Route>
-          ))}
+          <Route
+            path="/:title"
+            element={<PostContainer></PostContainer>}></Route>
         </Routes>
       </div>
     </MainBox>
