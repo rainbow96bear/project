@@ -6,22 +6,21 @@ const MainComponent = ({
   moveTo,
   blockInfo,
   transactionInfo,
-  searchDropView,
-  setSearchDropView,
+  keyWord,
+  setKeyWord,
+  search,
 }) => {
   return (
     <MainArea>
-      <TopBannerArea>
-        <HomeBtn>홈 버튼</HomeBtn>
-        <DropDownFunction>
-          home Blockchain Tokens NFTs Resources Developers More
-        </DropDownFunction>
-      </TopBannerArea>
       <SearchArea>
         <SearchBox>
           <div>
             <div>The Ethereum Blockchain Explorer</div>
-            <SearchInputBox>
+            <SearchInputBox
+              onSubmit={(e) => {
+                e.preventDefault();
+                search(keyWord);
+              }}>
               <select className="borderNone">
                 <option value={""}>All Filters</option>
                 <option value={"Addresses"}>Addresses</option>
@@ -30,7 +29,11 @@ const MainComponent = ({
                 <option value={"Labels"}>Labels</option>
                 <option value={"Websites"}>Websites</option>
               </select>
-              <input className="borderNone"></input>
+              <input
+                className="borderNone"
+                onChange={(e) => {
+                  setKeyWord(e.target.value);
+                }}></input>
               <button className="borderNone">
                 <FaSearch></FaSearch>
               </button>
@@ -60,9 +63,9 @@ const MainComponent = ({
             <FuncBox>
               <span
                 onClick={() => {
-                  moveTo("/block");
+                  moveTo("/blocks");
                 }}>
-                VIEW ALL BLOCKS{" "}
+                VIEW ALL BLOCKS
               </span>
               <BsArrowRight color="gray"></BsArrowRight>
             </FuncBox>
@@ -82,9 +85,9 @@ const MainComponent = ({
             <FuncBox>
               <span
                 onClick={() => {
-                  moveTo("/tx");
+                  moveTo("/txs");
                 }}>
-                VIEW ALL TRANSACTIONS{" "}
+                VIEW ALL TRANSACTIONS
               </span>
               <BsArrowRight color="gray"></BsArrowRight>
             </FuncBox>
@@ -101,19 +104,12 @@ const MainArea = styled.div`
   flex-direction: column;
   align-items: center;
 `;
-const TopBannerArea = styled.div`
-  width: 100%;
-  max-width: 1400px;
-  display: flex;
-  justify-content: space-between;
-  background-color: yellow;
-`;
-const HomeBtn = styled.button``;
-const DropDownFunction = styled.div``;
+
 const SearchArea = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
+  background-color: #7777ff;
 `;
 const SearchBox = styled.div`
   width: 100%;
@@ -163,8 +159,9 @@ const LatestInfoBox = styled.div`
   max-width: 1400px;
   & > div {
     width: 50%;
+    max-width: 100%;
     margin: 10px;
-    box-shadow: 2px 2px 2px 2px gray;
+    box-shadow: 0px 0px 2px 2px lightgray;
     background-color: white;
     border-radius: 5px;
   }
@@ -189,5 +186,6 @@ const FuncBox = styled.div`
   span {
     font-weight: bold;
     color: gray;
+    cursor: pointer;
   }
 `;

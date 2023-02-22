@@ -1,13 +1,8 @@
 import MainComponent from "./MainComponent";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
-const MainContainer = () => {
-  const [searchDropView, setSearchDropView] = useState(false);
-  const navigate = useNavigate();
-  const moveTo = (where) => {
-    navigate(where);
-  };
+const MainContainer = ({ moveTo }) => {
+  const [keyWord, setKeyWord] = useState("");
   const [blockInfo, setBlockInfo] = useState([]);
   const [transactionInfo, setTransactionInfo] = useState([]);
   const syncDB = async () => {
@@ -21,6 +16,14 @@ const MainContainer = () => {
     const data = await axios.post("/api/transactionInfo/getLatelyTransaction");
     setTransactionInfo(data.data.data);
   };
+  const search = async (keyWord) => {
+    const { data } = await axios.post("/api/search/byKeyword", { keyWord });
+    if (data.where == "404") {
+      moveTo(`/404`);
+    } else {
+      moveTo(`/${data.where}/${data.value}`);
+    }
+  };
   useEffect(() => {
     syncDB();
     getLatelyBlock();
@@ -31,8 +34,9 @@ const MainContainer = () => {
       moveTo={moveTo}
       blockInfo={blockInfo}
       transactionInfo={transactionInfo}
-      searchDropView={searchDropView}
-      setSearchDropView={setSearchDropView}></MainComponent>
+      keyWord={keyWord}
+      setKeyWord={setKeyWord}
+      search={search}></MainComponent>
   );
 };
 export default MainContainer;

@@ -8,5 +8,13 @@ router.post("/getLatelyBlock", async (req, res) => {
   });
   res.send({ data });
 });
+router.post("/getLastNumber", async (req, res) => {
+  const data = (
+    await Block_Info.findOne({
+      order: [["id", "DESC"]],
+    })
+  ).blockHeight;
+  res.send(data);
+});
 
 module.exports = router;

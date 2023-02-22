@@ -1,36 +1,13 @@
 import { useEffect, useState } from "react";
-import { useLocation, useParams, useSearchParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import SingleItemInfoComponent from "./SingleItemInfoComponent";
 import axios from "axios";
 
-const SingleItemInfoContainer = ({ type }) => {
+const SingleItemInfoContainer = ({ type, moveTo }) => {
   const { value } = useParams();
-  const [blockInfo, setBlockInfo] = useState([
-    "Block Height:",
-    "Timestamp:",
-    "Transactions:",
-    "Total Difficulty:",
-    "Size:",
-    "Gas Used",
-    "Gas Limit",
-    "Extra Data:",
-    "Hash:",
-    "Parent Hash:",
-    "State Root",
-    "Nonce:",
-  ]);
-  const [txInfo, settxInfo] = useState([
-    "Transaction Hash:",
-    "Status:",
-    "Block:",
-    "Timestamp:",
-    "From:",
-    "Interacted With (To):",
-    "Value:",
-    "Gas Price:",
-  ]);
-  const [itemInfo, setItemInfo] = useState({});
 
+  const [itemInfo, setItemInfo] = useState([]);
+  const [lastNumber, setLastNumber] = useState();
   const getInfo = async (type, value) => {
     const { data } = await axios.post(`/api/getInfo`, {
       type,
@@ -38,16 +15,25 @@ const SingleItemInfoContainer = ({ type }) => {
     });
     setItemInfo(data.data);
   };
+  const getLastNumber = async () => {
+    const { data } = await axios.post("/api/blockInfo/getLastNumber");
+    setLastNumber(data);
+  };
+
   useEffect(() => {
     getInfo(type, value);
+  }, [value]);
+  useEffect(() => {
+    getLastNumber();
   }, []);
+
   return (
     <SingleItemInfoComponent
-      blockInfo={blockInfo}
-      txInfo={txInfo}
       itemInfo={itemInfo}
+      lastNumber={lastNumber}
       type={type}
-      value={value}></SingleItemInfoComponent>
+      value={value}
+      moveTo={moveTo}></SingleItemInfoComponent>
   );
 };
 export default SingleItemInfoContainer;

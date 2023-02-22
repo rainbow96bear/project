@@ -19,9 +19,5 @@ const HeaderBox = styled.div`
   max-width: 1400px;
 `;
 
-const PriceInfoArea = styled.div`
-  background-color: green;
-`;
-const SimpleSettingArea = styled.div`
-  background-color: green;
-`;
+const PriceInfoArea = styled.div``;
+const SimpleSettingArea = styled.div``;

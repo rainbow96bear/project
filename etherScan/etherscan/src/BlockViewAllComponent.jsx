@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
-const TxBoxComponent = ({ itemInfo, moveTo }) => {
+const BlockViewAllComponent = ({ itemInfo, moveTo }) => {
   return (
-    <TxBox>
+    <AddrBox>
       <ItemBox>
         <KeyText>Transaction Hash: </KeyText>
         <ValueText>{itemInfo?.transactionHash}</ValueText>
@@ -48,11 +48,12 @@ const TxBoxComponent = ({ itemInfo, moveTo }) => {
         <KeyText>Gas Limit: </KeyText>
         <ValueText>{itemInfo?.Block_Info?.gasLimit}</ValueText>
       </ItemBox>
-    </TxBox>
+    </AddrBox>
   );
 };
-export default TxBoxComponent;
-const TxBox = styled.div``;
+export default BlockViewAllComponent;
+
+const AddrBox = styled.div``;
 const ItemBox = styled.div`
   padding: 10px;
   width: 100%;

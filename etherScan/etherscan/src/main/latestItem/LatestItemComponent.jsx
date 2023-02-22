@@ -29,22 +29,43 @@ const LatestItemComponent = ({ info, moveTo, type }) => {
           <div>
             {type == "block" ? (
               <>
-                Fee Recipient <span>{info?.miner}</span>
+                Fee Recipient{" "}
+                <span
+                  onClick={() => {
+                    moveTo(`/address/${info?.miner}`);
+                  }}>
+                  {info?.miner}
+                </span>
               </>
             ) : (
               <>
-                From <span>{info?.from}</span>
+                From Recipient{" "}
+                <span
+                  onClick={() => {
+                    moveTo(`/address/${info?.from}`);
+                  }}>
+                  {info?.from}
+                </span>
               </>
             )}
           </div>
           <div>
             {type == "block" ? (
               <>
-                <span>{info?.transactionNumber}</span> txns in 12secs
+                <span title="Transactions in this Block">
+                  {info?.transactionNumber} txns
+                </span>{" "}
+                in 12secs
               </>
             ) : (
               <>
-                To <span>{info?.to}</span>
+                To{" "}
+                <span
+                  onClick={() => {
+                    moveTo(`/address/${info?.from}`);
+                  }}>
+                  {info?.to}
+                </span>
               </>
             )}
           </div>
@@ -55,11 +76,13 @@ const LatestItemComponent = ({ info, moveTo, type }) => {
 };
 export default LatestItemComponent;
 const ItemBox = styled.div`
+  font-size: 14px;
   display: flex;
   justify-content: space-between;
   margin: 10px;
   span {
-    color: blue;
+    color: #4d83ca;
+    cursor: pointer;
   }
 `;
 const ImgBox = styled.div`
