@@ -53,6 +53,7 @@ const MainComponent = ({
             <Title>
               <span>Latest Blocks</span>
             </Title>
+
             {blockInfo?.map((info, index) => (
               <LatestItemContainer
                 key={`blockItem-${index}`}
@@ -60,6 +61,7 @@ const MainComponent = ({
                 moveTo={moveTo}
                 type={"block"}></LatestItemContainer>
             ))}
+
             <FuncBox>
               <span
                 onClick={() => {
@@ -82,6 +84,7 @@ const MainComponent = ({
                 moveTo={moveTo}
                 type={"transaction"}></LatestItemContainer>
             ))}
+
             <FuncBox>
               <span
                 onClick={() => {
@@ -147,7 +150,6 @@ const SearchInputBox = styled.form`
     border-radius: 10px;
   }
 `;
-
 const LatestInfoArea = styled.div`
   display: flex;
   justify-content: center;
@@ -155,11 +157,11 @@ const LatestInfoArea = styled.div`
 `;
 const LatestInfoBox = styled.div`
   display: flex;
+  // flex-direction: column;
   width: 100%;
   max-width: 1400px;
   & > div {
     width: 50%;
-    max-width: 100%;
     margin: 10px;
     box-shadow: 0px 0px 2px 2px lightgray;
     background-color: white;
@@ -170,19 +172,16 @@ const Title = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
-  padding: 10px;
-
+  padding: 10px 0px;
   span {
     font-weight: bold;
   }
 `;
 const FuncBox = styled.div`
-  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 10px;
-
+  padding: 10px 0px;
   span {
     font-weight: bold;
     color: gray;

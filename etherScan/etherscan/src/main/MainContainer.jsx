@@ -9,7 +9,7 @@ const MainContainer = ({ moveTo }) => {
     await axios.post("/sync", { data: "동기화 요청" });
   };
   const getLatelyBlock = async () => {
-    const data = await axios.post("/api/blockInfo/getLatelyBlock");
+    const data = await axios.post("/api/blockInfo/getLatelyBlock", blockInfo);
     setBlockInfo([...data.data.data]);
   };
   const getLatelyTransaction = async () => {

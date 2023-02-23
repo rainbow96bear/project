@@ -5,7 +5,7 @@ const HeaderComponent = () => {
     <HeaderArea>
       <HeaderBox>
         <PriceInfoArea>여기는 가격정보</PriceInfoArea>
-        <SimpleSettingArea>여기는 간단한 설정</SimpleSettingArea>
+        <Login>Login</Login>
       </HeaderBox>
     </HeaderArea>
   );
@@ -20,4 +20,13 @@ const HeaderBox = styled.div`
 `;
 
 const PriceInfoArea = styled.div``;
-const SimpleSettingArea = styled.div``;
+const Login = styled.div`
+  font-size: 0.8rem;
+  padding: 5px;
+  margin: 5px;
+  border: 2px solid lightgray;
+  border-radius: 10px;
+  :hover {
+    background-color: lightgray;
+  }
+`;
