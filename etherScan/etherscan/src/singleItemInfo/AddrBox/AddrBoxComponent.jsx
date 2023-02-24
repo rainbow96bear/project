@@ -1,9 +1,18 @@
-import styled, { css } from "styled-components";
-
-const AddrBoxComponent = ({ itemInfo, moveTo, value }) => {
+import { useEffect } from "react";
+import styled from "styled-components";
+import {
+  ClickAbleSpan,
+  ShowPastTime,
+  WeiToEth,
+} from "../../customComponents/customComponent";
+const AddrBoxComponent = ({ itemInfo, value }) => {
+  useEffect(() => {
+    console.log(itemInfo.length);
+    console.log(typeof itemInfo);
+  }, [value, itemInfo]);
   return (
     <AddrBox>
-      <TotalInfo>{`A total of ${itemInfo.length} transactions`}</TotalInfo>
+      <TotalInfo>{`A total of ${itemInfo?.length} transactions`}</TotalInfo>
       <ItemBox>
         <Item>
           <div>Transaction Hash</div>
@@ -15,52 +24,43 @@ const AddrBoxComponent = ({ itemInfo, moveTo, value }) => {
           <div>Value</div>
         </Item>
       </ItemBox>
-      {itemInfo?.map((item, index) => (
-        <ItemBox key={`item-${index}`}>
-          <Item>
-            <div>
-              <span
-                onClick={() => {
-                  moveTo(`/tx/${item.transactionHash}`);
-                }}>
-                {item.transactionHash}
-              </span>
-            </div>
-            <div>
-              <span
-                onClick={() => {
-                  moveTo(`/Block/${item.blockNumber}`);
-                }}>
-                {item.blockNumber}
-              </span>
-            </div>
-            <div>{item.Block_Info.timeStamp}</div>
-            <div>
-              <span
-                onClick={() => {
-                  moveTo(`/address/${item.from}`);
-                }}>
-                {item.from}
-              </span>
-            </div>
+      {itemInfo.length != undefined
+        ? itemInfo?.map((item, index) => (
+            <ItemBox key={`item-${index}`}>
+              <Item>
+                <div>
+                  <ClickAbleSpan
+                    text={item.transactionHash}
+                    moveToWhere={`/tx/${item.transactionHash}`}></ClickAbleSpan>
+                </div>
+                <div>
+                  <ClickAbleSpan
+                    text={item.blockNumber}
+                    moveToWhere={`/Block/${item.blockNumber}`}></ClickAbleSpan>
+                </div>
+                <ShowPastTime
+                  createTime={item.Block_Info.timeStamp}></ShowPastTime>
+                <div>
+                  <ClickAbleSpan
+                    text={item.from}
+                    moveToWhere={`/address/${item.from}`}></ClickAbleSpan>
+                </div>
 
-            <div>
-              <INnOUT color={value == item.from ? "OUT" : "IN"}>
-                {value == item.from ? "OUT" : "IN"}
-              </INnOUT>
-            </div>
-            <div>
-              <span
-                onClick={() => {
-                  moveTo(`/address/${item.to}`);
-                }}>
-                {item.to}
-              </span>
-            </div>
-            <div>{item.value}</div>
-          </Item>
-        </ItemBox>
-      ))}
+                <div>
+                  <INnOUT color={value == item.from ? "OUT" : "IN"}>
+                    {value == item.from ? "OUT" : "IN"}
+                  </INnOUT>
+                </div>
+                <div>
+                  <ClickAbleSpan
+                    text={item.to}
+                    moveToWhere={`/address/${item.to}`}></ClickAbleSpan>
+                </div>
+                <WeiToEth wei={item.value}></WeiToEth>
+              </Item>
+            </ItemBox>
+          ))
+        : ""}
     </AddrBox>
   );
 };
@@ -73,7 +73,6 @@ const TotalInfo = styled.div`
   padding: 0px 0px 10px 15px;
 `;
 const ItemBox = styled.div`
-  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -82,27 +81,26 @@ const ItemBox = styled.div`
 const Item = styled.div`
   width: 100%;
   display: flex;
-  // justify-content: space-between;
   border-top: 1px solid lightgray;
   > div {
     padding: 15px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    width: 20%;
+    width: 23%;
   }
-  span {
-    color: #4d83bd;
-    cursor: pointer;
-  }
+
   & :nth-child(2) {
-    width: 5%;
+    width: 7%;
   }
   & :nth-child(3) {
-    width: 5%;
+    width: 7%;
   }
   & :nth-child(5) {
-    width: 5%;
+    width: 7%;
+  }
+  & :nth-child(7) {
+    width: 10%;
   }
 `;
 const INnOUT = styled.div`

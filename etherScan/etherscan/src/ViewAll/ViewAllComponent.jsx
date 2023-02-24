@@ -12,7 +12,6 @@ const ViewAllComponent = ({
   setPage,
   itemInfo,
   InfoLength,
-  moveTo,
 }) => {
   return (
     <ViewAllContainer>
@@ -47,14 +46,10 @@ const ViewAllComponent = ({
               InfoLength={InfoLength}></PagingContainer>
           </Top>
           {type == "blocks" && (
-            <BlockViewAllContainer
-              moveTo={moveTo}
-              itemInfo={itemInfo}></BlockViewAllContainer>
+            <BlockViewAllContainer itemInfo={itemInfo}></BlockViewAllContainer>
           )}
           {type == "txs" && (
-            <TxViewAllContainer
-              moveTo={moveTo}
-              itemInfo={itemInfo}></TxViewAllContainer>
+            <TxViewAllContainer itemInfo={itemInfo}></TxViewAllContainer>
           )}
 
           <Bottom>
@@ -89,8 +84,9 @@ const ViewAllContainer = styled.div`
 `;
 const ViewAllBox = styled.div`
   padding: 10px;
-  width: 100%;
-  max-width: 1400px;
+  width: 75%;
+  margin: 0 auto;
+  // max-width: 1400px;
 `;
 const Title = styled.div`
   font-weight: bold;
@@ -106,14 +102,6 @@ const ItemBox = styled.div`
   & .block {
     div:nth-child(4) {
       flex: 9;
-    }
-  }
-  & .tx {
-    div:nth-child(2) {
-      flex: 1;
-    }
-    div:nth-child(3) {
-      flex: 1;
     }
   }
 `;

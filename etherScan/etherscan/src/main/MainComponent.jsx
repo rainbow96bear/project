@@ -1,4 +1,5 @@
 import styled from "styled-components";
+
 import LatestItemContainer from "./latestItem/LatestItemContainer";
 import { BsArrowRight } from "react-icons/bs";
 import { FaSearch } from "react-icons/fa";
@@ -58,7 +59,6 @@ const MainComponent = ({
               <LatestItemContainer
                 key={`blockItem-${index}`}
                 info={info}
-                moveTo={moveTo}
                 type={"block"}></LatestItemContainer>
             ))}
 
@@ -81,7 +81,6 @@ const MainComponent = ({
               <LatestItemContainer
                 key={`transactionItem-${index}`}
                 info={info}
-                moveTo={moveTo}
                 type={"transaction"}></LatestItemContainer>
             ))}
 

@@ -1,13 +1,13 @@
 import "./App.css";
 import { Route, Routes, useNavigate } from "react-router-dom";
+import styled from "styled-components";
+
 import MainContainer from "./main/MainContainer";
 import HeaderContainer from "./header/HeaderContainer";
 import FooterContainer from "./footer/FooterContainer";
-import styled from "styled-components";
 import SingleItemInfoContainer from "./singleItemInfo/SingleItemInfoContainer";
 import ViewAllContainer from "./ViewAll/ViewAllContainer";
 import NotFindContainer from "./404/NotFindContainer";
-import AddrViewAllContainer from "./singleItemInfo/AddrBox/AddrBoxContainer";
 function App() {
   const navigate = useNavigate();
   const moveTo = (where) => {
@@ -39,9 +39,7 @@ function App() {
             element={<MainContainer moveTo={moveTo}></MainContainer>}></Route>
           <Route
             path="/:type"
-            element={
-              <ViewAllContainer moveTo={moveTo}></ViewAllContainer>
-            }></Route>
+            element={<ViewAllContainer></ViewAllContainer>}></Route>
           <Route
             path="/Block/:value"
             element={

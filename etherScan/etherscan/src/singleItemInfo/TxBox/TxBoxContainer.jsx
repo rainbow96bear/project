@@ -1,6 +1,6 @@
 import TxBoxComponent from "./TxBoxComponent";
-const TxBoxContainer = ({ itemInfo, moveTo }) => {
-  return <TxBoxComponent itemInfo={itemInfo} moveTo={moveTo}></TxBoxComponent>;
+const TxBoxContainer = ({ itemInfo }) => {
+  return <TxBoxComponent itemInfo={itemInfo}></TxBoxComponent>;
 };
 
 export default TxBoxContainer;

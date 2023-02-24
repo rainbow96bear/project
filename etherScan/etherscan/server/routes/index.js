@@ -45,6 +45,7 @@ router.post("/getInfo", async (req, res) => {
       include: [{ model: Block_Info }],
       limit: 25,
     });
+
     res.send({ data });
   }
 });

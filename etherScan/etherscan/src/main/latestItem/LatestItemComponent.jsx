@@ -1,7 +1,11 @@
 import styled from "styled-components";
 import { BsBox, BsFileText } from "react-icons/bs";
+import {
+  ClickAbleSpan,
+  ShowPastTime,
+} from "../../customComponents/customComponent";
 
-const LatestItemComponent = ({ info, moveTo, type }) => {
+const LatestItemComponent = ({ info, type }) => {
   return (
     <ItemBox>
       <ImgBox>
@@ -11,31 +15,28 @@ const LatestItemComponent = ({ info, moveTo, type }) => {
       </ImgBox>
       <InfoBox type={type}>
         <div>
-          <div
-            onClick={() => {
-              type == "block"
-                ? moveTo(`/Block/${info?.blockHeight}`)
-                : moveTo(`/tx/${info?.transactionHash}`);
-            }}>
-            <span>
-              {type == "block" ? info?.blockHeight : info?.transactionHash}
-            </span>
-          </div>
           <div>
-            {type == "block" ? info?.timeStamp : info?.Block_Info?.timeStamp}
+            <ClickAbleSpan
+              text={type == "block" ? info?.blockHeight : info?.transactionHash}
+              moveToWhere={
+                type == "block"
+                  ? `/Block/${info?.blockHeight}`
+                  : `/tx/${info?.transactionHash}`
+              }></ClickAbleSpan>
           </div>
+          <ShowPastTime
+            createTime={
+              type == "block" ? info?.timeStamp : info?.Block_Info?.timeStamp
+            }></ShowPastTime>
         </div>
         <div>
           {type == "block" && (
             <>
               <div>
                 Fee Recipient{" "}
-                <span
-                  onClick={() => {
-                    moveTo(`/address/${info?.miner}`);
-                  }}>
-                  {info?.miner}
-                </span>
+                <ClickAbleSpan
+                  text={info?.miner}
+                  moveToWhere={`/address/${info?.miner}`}></ClickAbleSpan>
               </div>
 
               <div>
@@ -50,21 +51,15 @@ const LatestItemComponent = ({ info, moveTo, type }) => {
             <>
               <div>
                 To{" "}
-                <span
-                  onClick={() => {
-                    moveTo(`/address/${info?.from}`);
-                  }}>
-                  {info?.to}
-                </span>
+                <ClickAbleSpan
+                  text={info?.to}
+                  moveToWhere={`/address/${info?.from}`}></ClickAbleSpan>
               </div>
               <div>
                 From Recipient{" "}
-                <span
-                  onClick={() => {
-                    moveTo(`/address/${info?.from}`);
-                  }}>
-                  {info?.from}
-                </span>
+                <ClickAbleSpan
+                  text={info?.from}
+                  moveToWhere={`/address/${info?.from}`}></ClickAbleSpan>
               </div>
             </>
           )}
@@ -79,10 +74,6 @@ const ItemBox = styled.div`
   font-size: 14px;
   display: flex;
   justify-content: space-between;
-  span {
-    color: #4d83ca;
-    cursor: pointer;
-  }
 `;
 const ImgBox = styled.div`
   width: 5%;

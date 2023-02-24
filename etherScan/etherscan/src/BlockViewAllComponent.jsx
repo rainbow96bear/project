@@ -1,6 +1,7 @@
 import styled from "styled-components";
+import { ClickAbleSpan } from "./customComponents/customComponent";
 
-const BlockViewAllComponent = ({ itemInfo, moveTo }) => {
+const BlockViewAllComponent = ({ itemInfo }) => {
   return (
     <AddrBox>
       <ItemBox>
@@ -13,11 +14,10 @@ const BlockViewAllComponent = ({ itemInfo, moveTo }) => {
       </ItemBox>
       <ItemBox>
         <KeyText>Block: </KeyText>
-        <ValueText
-          onClick={() => {
-            moveTo(`/Block/${itemInfo?.blockNumber}`);
-          }}>
-          <span>{itemInfo?.blockNumber}</span>
+        <ValueText>
+          <ClickAbleSpan
+            text={itemInfo?.blockNumber}
+            moveToWhere={`/Block/${itemInfo?.blockNumber}`}></ClickAbleSpan>
         </ValueText>
       </ItemBox>
       <ItemBox>
@@ -65,8 +65,4 @@ const KeyText = styled.div`
 `;
 const ValueText = styled.div`
   flex: 4;
-  span {
-    color: #4d83bd;
-    cursor: pointer;
-  }
 `;

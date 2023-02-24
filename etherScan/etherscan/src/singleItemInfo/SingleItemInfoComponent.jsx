@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import BlockBoxContainer from "./BlockBox/BlockBoxContainer";
 import TxBoxContainer from "./TxBox/TxBoxContainer";
 import AddrBoxContainer from "./AddrBox/AddrBoxContainer";
@@ -19,17 +18,7 @@ const SingleItemInfoComponent = ({
             Block <span>#{value}</span>
           </>
         )}
-        {type == "tx" && (
-          <TitleBox>
-            Transaction Details
-            <FuncBtn>
-              <BsChevronLeft></BsChevronLeft>
-            </FuncBtn>
-            <FuncBtn>
-              <BsChevronRight></BsChevronRight>
-            </FuncBtn>
-          </TitleBox>
-        )}
+        {type == "tx" && <TitleBox>Transaction Details</TitleBox>}
         {type == "address" && (
           <TitleBox>
             Address<span>#{value}</span>
@@ -45,14 +34,10 @@ const SingleItemInfoComponent = ({
               lastNumber={lastNumber}></BlockBoxContainer>
           )}
           {type == "tx" && (
-            <TxBoxContainer
-              itemInfo={itemInfo}
-              moveTo={moveTo}></TxBoxContainer>
+            <TxBoxContainer itemInfo={itemInfo}></TxBoxContainer>
           )}
           {type == "address" && (
-            <AddrBoxContainer
-              itemInfo={itemInfo}
-              moveTo={moveTo}></AddrBoxContainer>
+            <AddrBoxContainer itemInfo={itemInfo}></AddrBoxContainer>
           )}
         </InfoBox>
       </ItemBox>

@@ -4,6 +4,10 @@ import {
   BsChevronLeft,
   BsChevronRight,
 } from "react-icons/bs";
+import {
+  ClickAbleSpan,
+  ShowPastTime,
+} from "../../customComponents/customComponent";
 
 const BlockBoxComponent = ({ itemInfo, moveTo, lastNumber }) => {
   return (
@@ -32,7 +36,9 @@ const BlockBoxComponent = ({ itemInfo, moveTo, lastNumber }) => {
       <ItemBox>
         <BsQuestionCircle></BsQuestionCircle>
         <KeyText> Timestamp: </KeyText>
-        <ValueText>{itemInfo?.timeStamp}</ValueText>
+        <ValueText>
+          <ShowPastTime createTime={itemInfo?.timeStamp}></ShowPastTime>
+        </ValueText>
       </ItemBox>
       <ItemBox>
         <BsQuestionCircle></BsQuestionCircle>
@@ -67,11 +73,10 @@ const BlockBoxComponent = ({ itemInfo, moveTo, lastNumber }) => {
       <ItemBox>
         <BsQuestionCircle></BsQuestionCircle>
         <KeyText> Parent Hash: </KeyText>
-        <ValueText
-          onClick={() => {
-            moveTo(`/Block/${itemInfo?.parentHash}`);
-          }}>
-          <span>{itemInfo?.parentHash}</span>
+        <ValueText>
+          <ClickAbleSpan
+            text={itemInfo?.parentHash}
+            moveToWhere={`/Block/${itemInfo?.parentHash}`}></ClickAbleSpan>
         </ValueText>
       </ItemBox>
       <ItemBox>
@@ -106,10 +111,6 @@ const ValueText = styled.div`
   flex: 4;
   color: black;
   display: flex;
-  span {
-    color: #4d83bd;
-    cursor: pointer;
-  }
 `;
 const FuncBtn = styled.div`
   display: flex;

@@ -1,6 +1,10 @@
 import styled from "styled-components";
+import {
+  ClickAbleSpan,
+  ShowPastTime,
+} from "../../customComponents/customComponent";
 
-const BlockViewAllComponent = ({ itemInfo, moveTo }) => {
+const BlockViewAllComponent = ({ itemInfo }) => {
   return (
     <>
       <Item className="block">
@@ -13,15 +17,18 @@ const BlockViewAllComponent = ({ itemInfo, moveTo }) => {
       </Item>
       {itemInfo?.map((item, index) => (
         <Item key={`item-${index}`} className="block">
-          <div
-            onClick={() => {
-              moveTo(`/Block/${item.blockHeight}`);
-            }}>
-            <span>{item.blockHeight}</span>
+          <div>
+            <ClickAbleSpan
+              text={item.blockHeight}
+              moveToWhere={`/Block/${item.blockHeight}`}></ClickAbleSpan>
           </div>
-          <div>{item.timeStamp}</div>
+          <ShowPastTime createTime={item.timeStamp}></ShowPastTime>
           <div>{item.transactionNumber}</div>
-          <div>{item.feeRecipient}</div>
+          <div>
+            <ClickAbleSpan
+              text={item.feeRecipient}
+              moveToWhere={`/address/${item.feeRecipient}`}></ClickAbleSpan>
+          </div>
           <div>{item.gasUsed}</div>
           <div>{item.gasLimit}</div>
         </Item>
@@ -42,9 +49,5 @@ const Item = styled.div`
     text-overflow: ellipsis;
     flex: 2;
     max-width: 500px;
-  }
-  span {
-    color: #4d83bd;
-    cursor: pointer;
   }
 `;

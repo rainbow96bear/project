@@ -1,9 +1,14 @@
 import styled from "styled-components";
+import {
+  ClickAbleSpan,
+  ShowPastTime,
+  WeiToEth,
+} from "../../customComponents/customComponent";
 
-const TxViewAllComponent = ({ itemInfo, moveTo }) => {
+const TxViewAllComponent = ({ itemInfo }) => {
   return (
-    <>
-      <Item className="tx">
+    <Scroll>
+      <Item>
         <div>Txn Hash</div>
         <div>Block</div>
         <div>Age</div>
@@ -12,44 +17,59 @@ const TxViewAllComponent = ({ itemInfo, moveTo }) => {
         <div>Value</div>
       </Item>
       {itemInfo?.map((item, index) => (
-        <Item key={`item-${index}`} className="tx">
-          <div
-            onClick={() => {
-              moveTo(`/tx/${item.transactionHash}`);
-            }}>
-            <span>{item.transactionHash}</span>
+        <Item key={`item-${index}`}>
+          <div>
+            <ClickAbleSpan
+              text={item.transactionHash}
+              moveToWhere={`/tx/${item.transactionHash}`}></ClickAbleSpan>
           </div>
-          <div
-            onClick={() => {
-              moveTo(`/Block/${item.blockNumber}`);
-            }}>
-            <span>{item.blockNumber}</span>
+          <div>
+            <ClickAbleSpan
+              text={item.blockNumber}
+              moveToWhere={`/Block/${item.blockNumber}`}></ClickAbleSpan>
           </div>
-          <div>{item?.Block_Info.timeStamp}</div>
-          <div>{item.from}</div>
-          <div>{item.to}</div>
-          <div>{item.value}</div>
+          <ShowPastTime
+            createTime={item ? item?.Block_Info.timeStamp : 0}></ShowPastTime>
+          <div>
+            <ClickAbleSpan
+              text={item.from}
+              moveToWhere={`/address/${item.from}`}></ClickAbleSpan>
+          </div>
+          <div>
+            <ClickAbleSpan
+              text={item.to}
+              moveToWhere={`/address/${item.to}`}></ClickAbleSpan>
+          </div>
+          <WeiToEth wei={item.value}></WeiToEth>
         </Item>
       ))}
-    </>
+    </Scroll>
   );
 };
 export default TxViewAllComponent;
-
+const Scroll = styled.div`
+  overflow-y: hidden;
+  overflow-x: scroll;
+`;
 const Item = styled.div`
   display: flex;
-  justify-content: space-between;
-  border-top: 1px solid lightgray;
+  width: 130%;
   div {
+    margin: auto;
+    border-top: 1px solid lightgray;
     padding: 15px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    flex: 2;
-    max-width: 500px;
+    width: 100%;
   }
-  span {
-    color: #4d83bd;
-    cursor: pointer;
+  & > :nth-child(2) {
+    width: 250px;
+  }
+  & > :nth-child(3) {
+    max-width: 150px;
+  }
+  & > :nth-child(6) {
+    width: 500px;
   }
 `;

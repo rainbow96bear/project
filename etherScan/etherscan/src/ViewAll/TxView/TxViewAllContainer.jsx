@@ -1,9 +1,5 @@
 import TxViewAllComponent from "./TxViewAllComponent";
-const TxViewAllContainer = ({ moveTo, itemInfo }) => {
-  return (
-    <TxViewAllComponent
-      itemInfo={itemInfo}
-      moveTo={moveTo}></TxViewAllComponent>
-  );
+const TxViewAllContainer = ({ itemInfo }) => {
+  return <TxViewAllComponent itemInfo={itemInfo}></TxViewAllComponent>;
 };
 export default TxViewAllContainer;

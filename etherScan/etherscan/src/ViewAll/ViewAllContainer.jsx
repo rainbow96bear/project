@@ -2,7 +2,7 @@ import ViewAllComponent from "./ViewAllComponent";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-const ViewAllContainer = ({ moveTo }) => {
+const ViewAllContainer = ({}) => {
   const { type } = useParams();
   const [showRow, setShowRow] = useState(10);
   const [page, setPage] = useState(1);
@@ -30,8 +30,7 @@ const ViewAllContainer = ({ moveTo }) => {
       page={page}
       itemInfo={itemInfo}
       InfoLength={InfoLength}
-      getAllInfo={getAllInfo}
-      moveTo={moveTo}></ViewAllComponent>
+      getAllInfo={getAllInfo}></ViewAllComponent>
   );
 };
 export default ViewAllContainer;

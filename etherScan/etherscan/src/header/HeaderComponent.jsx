@@ -1,11 +1,16 @@
 import styled from "styled-components";
 
-const HeaderComponent = () => {
+const HeaderComponent = ({ logintest }) => {
   return (
     <HeaderArea>
       <HeaderBox>
         <PriceInfoArea>여기는 가격정보</PriceInfoArea>
-        <Login>Login</Login>
+        <Login
+          onClick={() => {
+            logintest();
+          }}>
+          Login
+        </Login>
       </HeaderBox>
     </HeaderArea>
   );

@@ -1,7 +1,9 @@
 import HeaderComponent from "./HeaderComponent";
+import axios from "axios";
 
 const HeaderContainer = () => {
-  return <HeaderComponent></HeaderComponent>;
+  const logintest = async () => {};
+  return <HeaderComponent logintest={logintest}></HeaderComponent>;
 };
 
 export default HeaderContainer;
